@@ -14,7 +14,8 @@ import repositorio.RepositorioException;
 public class ServicioAlquileres implements IServicioAlquileres {
 
 	private Repositorio<Usuario, String> repositorio = FactoriaRepositorios.getRepositorio(Usuario.class);
-
+	private IServicioEstaciones servicioEstaciones;
+	
 	@Override
 	public void reservar(String idUsuario, String idBicicleta) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
@@ -82,11 +83,11 @@ public class ServicioAlquileres implements IServicioAlquileres {
 	public void dejarBicicleta(String idUsuario, String idEstacion) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
 
-		if (usuario.alquiler()!=null || false/*TODO hay huecos disponibles en la estación*/)
+		if (usuario.alquiler()!=null || servicioEstaciones.hayHuecoDisponible())
 			throw new IllegalArgumentException("No se puede dejar la bicicleta.");
 		else {
 			usuario.alquiler().setFin(LocalDateTime.now());
-			//TODO Además, situa la bicicleta en la estación
+			servicioEstaciones.dejarBicicleta();
 		}
 
 	}
