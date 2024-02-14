@@ -3,9 +3,11 @@ package alquileres.modelo;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Usuario {
+import repositorio.Identificable;
 
-	private final String id;
+public class Usuario implements Identificable {
+
+	private String id;
 	private List<Reserva> reservas;
 	private List<Alquiler> alquileres;
 
@@ -18,6 +20,10 @@ public class Usuario {
 
 	public String getId() {
 		return id;
+	}
+	
+	public void setId(String id) {
+		this.id=id;
 	}
 
 	public List<Reserva> getReservas() {
@@ -66,6 +72,11 @@ public class Usuario {
 	
 	public boolean bloqueado() {
 		return reservasCaducadas() >= 3;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", reservas=" + reservas + ", alquileres=" + alquileres + "]";
 	}
 
 }

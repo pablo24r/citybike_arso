@@ -1,5 +1,8 @@
 package alquileres.servicio;
 
+import repositorio.EntidadNoEncontrada;
+import repositorio.RepositorioException;
+
 public interface IServicioAlquileres {
 
 	/**
@@ -13,7 +16,8 @@ public interface IServicioAlquileres {
 	 * permitida la reserva si el usuario está bloqueado o superaTiempo.
 	 * 
 	 */
-	void reservar(String idUsuario, String idBicicleta);
+	void reservar(String idUsuario, String idBicicleta)
+		throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * confirmarReserva(idUsuario). Esta operación confirma la reservaActiva del
@@ -23,7 +27,8 @@ public interface IServicioAlquileres {
 	 * 
 	 * El usuario tiene una reservaActiva.
 	 */
-	void confirmarReserva(String idUsuario);
+	void confirmarReserva(String idUsuario) 
+			throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * alquilar(idUsuario, idBicicleta). Crea el alquiler, sin reserva previa, de
@@ -34,14 +39,16 @@ public interface IServicioAlquileres {
 	 * El usuario no tiene una reservaActiva. El usuario no tiene un alquilerActivo.
 	 * No está permitido el alquiler si el usuario está bloqueado o superaTiempo.
 	 */
-	void alquilar(String idUsuario, String idBicicleta);
+	void alquilar(String idUsuario, String idBicicleta)
+			throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * historialUsuario(idUsuario): Usuario. Retorna la información con los
 	 * alquileres y reservas del usuario, y el estado del servicio (bloqueado,
 	 * tiempo de uso).
 	 */
-	String historialUsuario(String idUsuario);
+	String historialUsuario(String idUsuario)
+			throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * dejarBicicleta(idUsuario, idEstacion). La operación se encarga de concluir el
@@ -51,11 +58,13 @@ public interface IServicioAlquileres {
 	 * El usuario tiene un alquilerActivo. La estación tiene un hueco disponible
 	 * para el estacionamiento.
 	 */
-	void dejarBicicleta(String idUsuario, String idEstacion);
+	void dejarBicicleta(String idUsuario, String idEstacion)
+			throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * liberarBloqueo(idUsuario). Esta operación elimina todas las reservas
 	 * caducadas de un usuario.
 	 */
-	void liberarBloqueo(String idUsuario);
+	void liberarBloqueo(String idUsuario)
+			throws RepositorioException, EntidadNoEncontrada;
 }
