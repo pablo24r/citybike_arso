@@ -4,6 +4,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
@@ -12,6 +13,10 @@ import com.mongodb.client.result.UpdateResult;
 
 import alquileres.modelo.Usuario;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -36,13 +41,29 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 
 	}
 
-	@Override
-	public String add(T entity) throws RepositorioException {
-		InsertOneResult result = coleccion.insertOne(entity);
+	public Document newDocument(T entity) {
+		Document d = new Document();
+		d.append("usuario", entity.getId());
+		if (entity.getClass().equals(Usuario.class)) {
+			d.append("reservas", ((Usuario) entity).getReservas());
+			d.append("alquileres", ((Usuario) entity).getAlquileres());
+		}
+
+		return d;
+	}
+
+	public static String insertOneDocument(MongoCollection<Document> coleccion, Document d) {
+		InsertOneResult result = coleccion.insertOne(d);
 
 		if (result.getInsertedId() != null)
 			return result.getInsertedId().asObjectId().getValue().toString();
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public String add(T entity) throws RepositorioException {
+		return insertOneDocument((MongoCollection<Document>) coleccion, newDocument(entity));
 	}
 
 	@Override
@@ -95,10 +116,21 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 
 	@Override
 	public java.util.List<T> getAll() throws RepositorioException {
-		// Implementar la lógica para obtener todos los objetos de la base de datos
-		// MongoDB
-		// ...
-		return null;
+		// Lista para almacenar los documentos
+		List<T> entities = new ArrayList<>();
+		// Obtener un cursor a todos los documentos
+		MongoCursor<T> cursor = coleccion.find().iterator();
+		try {
+			// Iterar sobre el cursor para obtener cada documento
+			while (cursor.hasNext()) {
+				T entity = cursor.next();
+				entities.add(entity);
+			}
+		} finally {
+			// Cerrar el cursor para liberar recursos
+			cursor.close();
+		}
+		return entities;
 	}
 
 	@Override

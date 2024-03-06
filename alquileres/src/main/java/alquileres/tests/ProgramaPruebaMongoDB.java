@@ -1,5 +1,9 @@
 package alquileres.tests;
 
+import java.util.LinkedList;
+
+import alquileres.modelo.Alquiler;
+import alquileres.modelo.Reserva;
 import alquileres.modelo.Usuario;
 import alquileres.servicio.IServicioAlquileres;
 import repositorio.FactoriaRepositorios;
@@ -13,11 +17,14 @@ public class ProgramaPruebaMongoDB {
 
 		
 		try {
-			Usuario usuarioPRUEBA = repositorio.getById("user123");
-			System.out.println(usuarioPRUEBA.getId());
+			LinkedList<Reserva> reservas = new LinkedList<Reserva>();
+			LinkedList<Alquiler> alquileres = new LinkedList<Alquiler>();
 			
-			servicio.alquilar(usuarioPRUEBA.getId(), "bicicleta123");
-			System.out.println(servicio.historialUsuario(usuarioPRUEBA.getId()));
+			Usuario user1 = new Usuario("user123",reservas , alquileres);
+			repositorio.add(user1);
+			
+			repositorio.getById("user123");
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
