@@ -83,11 +83,12 @@ public class ServicioAlquileres implements IServicioAlquileres {
 	public void dejarBicicleta(String idUsuario, String idEstacion) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
 
-		if (usuario.alquiler()!=null || servicioEstaciones.hayHuecoDisponible())
+		if (usuario.alquiler()!=null || !servicioEstaciones.hayHuecoDisponible())
 			throw new IllegalArgumentException("No se puede dejar la bicicleta.");
 		else {
 			usuario.alquiler().setFin(LocalDateTime.now());
 			servicioEstaciones.dejarBicicleta();
+			System.out.println("Bicicleta dejada en la estación.");
 		}
 
 	}

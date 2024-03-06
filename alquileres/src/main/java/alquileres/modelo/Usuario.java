@@ -3,12 +3,24 @@ package alquileres.modelo;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.bson.BsonType;
+import org.bson.Document;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.codecs.pojo.annotations.BsonRepresentation;
+
 import repositorio.Identificable;
 
 public class Usuario implements Identificable {
-
+	
+	@BsonId
+	@BsonRepresentation(BsonType.OBJECT_ID) 
 	private String id;
+	
+	@BsonProperty(value="reservas")
 	private List<Reserva> reservas;
+	
+	@BsonProperty(value="alquileres")
 	private List<Alquiler> alquileres;
 
 	public Usuario(String id, List<Reserva> reservas, List<Alquiler> alquileres) {
@@ -18,10 +30,12 @@ public class Usuario implements Identificable {
 		this.alquileres = alquileres;
 	}
 
+	@Override
 	public String getId() {
 		return id;
 	}
 	
+	@Override
 	public void setId(String id) {
 		this.id=id;
 	}
@@ -77,6 +91,14 @@ public class Usuario implements Identificable {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", reservas=" + reservas + ", alquileres=" + alquileres + "]";
+	}
+	
+	public Document toDocument() {
+		Document d = new Document();
+		d.append("id", id);
+		d.append("reservas", getReservas());
+		d.append("alquileres", getAlquileres());
+		return d;
 	}
 
 }

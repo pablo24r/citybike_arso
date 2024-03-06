@@ -6,9 +6,8 @@ import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import servicio.FactoriaServicios;
 
-public class Programa {
+public class ProgramaPruebaMongoDB {
 	public static void main(String[] args) {
-		
 		Repositorio<Usuario, String> repositorio = FactoriaRepositorios.getRepositorio(Usuario.class);
 		IServicioAlquileres servicio = FactoriaServicios.getServicio(IServicioAlquileres.class);
 
@@ -23,6 +22,7 @@ public class Programa {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		
 		
 		
