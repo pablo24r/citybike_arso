@@ -15,23 +15,20 @@ public class ProgramaPruebaMongoDB {
 		Repositorio<Usuario, String> repositorio = FactoriaRepositorios.getRepositorio(Usuario.class);
 		IServicioAlquileres servicio = FactoriaServicios.getServicio(IServicioAlquileres.class);
 
-		
 		try {
 			LinkedList<Reserva> reservas = new LinkedList<Reserva>();
 			LinkedList<Alquiler> alquileres = new LinkedList<Alquiler>();
-			
-			Usuario user1 = new Usuario("user123",reservas , alquileres);
-			repositorio.add(user1);
-			
-			repositorio.getById("user123");
 
+			Usuario user1 = new Usuario(reservas, alquileres);
+			String id = repositorio.add(user1);
+			user1.setId(id);
+
+			repositorio.getById(user1.getId());
+			System.out.println(user1.toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
+
 	}
 }
