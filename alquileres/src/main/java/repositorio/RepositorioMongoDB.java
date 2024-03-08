@@ -28,7 +28,7 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 	MongoCollection<T> coleccion;
 
 	public RepositorioMongoDB() {
-		String connectionString = "mongodb+srv://pabloraullopezmartinez:ARSO2024@clusterarso.w0erjqo.mongodb.net/?retryWrites=true&w=majority&appName=ClusterARSO";
+		String connectionString = "mongodb+srv://arso:arso@cluster0.7z0ykhs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 		MongoClient mongoClient = MongoClients.create(connectionString);
 		MongoDatabase database = mongoClient.getDatabase("ClusterARSO");
 

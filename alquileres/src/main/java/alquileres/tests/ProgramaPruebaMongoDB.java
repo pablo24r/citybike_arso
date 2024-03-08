@@ -1,34 +1,41 @@
 package alquileres.tests;
 
+import java.time.LocalDateTime;
 import java.util.LinkedList;
+
+import org.bson.Document;
 
 import alquileres.modelo.Alquiler;
 import alquileres.modelo.Reserva;
 import alquileres.modelo.Usuario;
-import alquileres.servicio.IServicioAlquileres;
 import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
-import servicio.FactoriaServicios;
 
 public class ProgramaPruebaMongoDB {
 	public static void main(String[] args) {
 		Repositorio<Usuario, String> repositorio = FactoriaRepositorios.getRepositorio(Usuario.class);
-		IServicioAlquileres servicio = FactoriaServicios.getServicio(IServicioAlquileres.class);
 
 		try {
-			LinkedList<Reserva> reservas = new LinkedList<Reserva>();
-			LinkedList<Alquiler> alquileres = new LinkedList<Alquiler>();
+			Reserva reserva = new Reserva("bici1", LocalDateTime.now(), LocalDateTime.now().plusDays(1));
 
-			Usuario user1 = new Usuario(reservas, alquileres);
-			String id = repositorio.add(user1);
-			user1.setId(id);
+			Alquiler alquiler = new Alquiler("bici1", LocalDateTime.now(), LocalDateTime.now().plusDays(1));
 
-			repositorio.getById(user1.getId());
-			System.out.println(user1.toString());
+			System.out.println(reserva.toString());
+			System.out.println(alquiler.toString());
+
+			Usuario user1 = new Usuario();
+			user1.getReservas().add(reserva);
+			user1.getAlquileres().add(alquiler);
+			
+			String id = repositorio.add(user1); // Agregar usuario al repositorio y obtener el ID
+			user1.setId(id); // Asignar el ID al usuario
+
+			// Obtener el usuario del repositorio usando el ID
+			Usuario usuarioRecuperado = repositorio.getById(id);
+			System.out.println(usuarioRecuperado.toString()); // Imprimir el usuario recuperado
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 }

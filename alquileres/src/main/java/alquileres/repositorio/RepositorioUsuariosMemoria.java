@@ -6,6 +6,7 @@ import alquileres.modelo.*;
 import repositorio.RepositorioMemoria;
 
 public class RepositorioUsuariosMemoria extends RepositorioMemoria<Usuario> {
+	
 	public RepositorioUsuariosMemoria() {
 		try {
 			LinkedList<Reserva> reservas = new LinkedList<Reserva>();

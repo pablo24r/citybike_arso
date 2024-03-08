@@ -3,17 +3,36 @@ package alquileres.modelo;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import org.bson.BsonType;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.codecs.pojo.annotations.BsonRepresentation;
+
 public class Alquiler {
 
+	@BsonId
+	@BsonRepresentation(BsonType.OBJECT_ID)
+	private String id;
+
+	@BsonProperty(value = "idBicicleta")
 	private String idBicicleta;
+	@BsonProperty(value = "inicio")
 	private LocalDateTime inicio;
+	@BsonProperty(value = "fin")
 	private LocalDateTime fin;
 
+	public Alquiler() {
+
+	}
+
 	public Alquiler(String idBicicleta, LocalDateTime inicio, LocalDateTime fin) {
-		super();
 		this.idBicicleta = idBicicleta;
 		this.inicio = inicio;
 		this.fin = fin;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public String getIdBicicleta() {
