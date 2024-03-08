@@ -27,6 +27,22 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 
 	protected MongoCollection<T> coleccion;
 
+	public RepositorioMongoDB() {
+		String connectionString = "mongodb+srv://pabloraullopezmartinez:ARSO2024@clusterarso.w0erjqo.mongodb.net/?retryWrites=true&w=majority&appName=ClusterARSO";
+		String databaseName = "ClusterARSO";
+		String collectionName = "usuarios";
+	
+		MongoClient mongoClient = MongoClients.create(connectionString);
+		MongoDatabase database = mongoClient.getDatabase(databaseName);
+
+		CodecRegistry defaultCodecRegistry = CodecRegistries.fromRegistries(
+				MongoClientSettings.getDefaultCodecRegistry(),
+				CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+		@SuppressWarnings("unchecked")
+		Class <T> entityType = (Class<T>) Usuario.class;
+		coleccion = database.getCollection(collectionName, entityType).withCodecRegistry(defaultCodecRegistry);
+	}
+
 	public RepositorioMongoDB(String connectionString, String databaseName, String collectionName,
 			Class<T> entityType) {
 		MongoClient mongoClient = MongoClients.create(connectionString);
@@ -47,8 +63,7 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 
 		d.append("alquileres", ((Usuario) entity).getAlquileres());
 
-		d.append("numero", ((Usuario) entity).getNumero());
-		System.out.println("Documento: " + d.toString());
+		//System.out.println("Documento: " + d.toString());
 	
 
 	return d;

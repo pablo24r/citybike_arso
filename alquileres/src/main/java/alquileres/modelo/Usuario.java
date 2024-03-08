@@ -3,7 +3,6 @@ package alquileres.modelo;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.bson.BsonType;
 import org.bson.Document;
@@ -26,17 +25,14 @@ public class Usuario implements Identificable {
 	@BsonProperty(value = "alquileres")
 	private List<Alquiler> alquileres = new ArrayList<Alquiler>();
 	
-	
-	@BsonProperty(value = "numero")
-	private int numero;
+
 	
 	public Usuario() {
         this.id = new ObjectId().toString(); // Asignar un nuevo ObjectId como identificador
-		this.numero = new Random().nextInt();
-
 	}
 
 	public Usuario(List<Reserva> reservas, List<Alquiler> alquileres) {
+        this.id = new ObjectId().toString(); // Asignar un nuevo ObjectId como identificador
 		this.reservas = reservas;
 		this.alquileres = alquileres;
 	}
@@ -104,7 +100,7 @@ public class Usuario implements Identificable {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", reservas=" + reservas + ", alquileres=" + alquileres + " numero= " + numero +"]";
+		return "Usuario [id=" + id + ", reservas=" + reservas + ", alquileres=" + alquileres + "]";
 	}
 
 	public Document toDocument() {
@@ -120,16 +116,7 @@ public class Usuario implements Identificable {
 			alquileresDocument.add(alquiler.toDocument());
 		}
 		document.append("alquileres", alquileresDocument);
-		document.append("numero", numero);
 		return document;
-	}
-
-	public int getNumero() {
-		return numero;
-	}
-
-	public void setNumero(int numero) {
-		this.numero = numero;
 	}
 
 	@SuppressWarnings("unchecked")

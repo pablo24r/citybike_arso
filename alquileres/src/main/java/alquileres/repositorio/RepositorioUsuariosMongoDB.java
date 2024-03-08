@@ -6,8 +6,12 @@ import repositorio.RepositorioMongoDB;
 
 public class RepositorioUsuariosMongoDB extends RepositorioMongoDB<Usuario> {
 
+    public RepositorioUsuariosMongoDB() {
+    }
+	
     public RepositorioUsuariosMongoDB(String connectionString, String databaseName, String collectionName) {
-        super(connectionString, databaseName, collectionName, Usuario.class);
+        
+    	super(connectionString, databaseName, collectionName, Usuario.class);
     }
     
     public void guardarUsuario(Usuario usuario) {

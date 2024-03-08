@@ -12,8 +12,8 @@ public class RepositorioUsuariosMemoria extends RepositorioMemoria<Usuario> {
 			LinkedList<Reserva> reservas = new LinkedList<Reserva>();
 			LinkedList<Alquiler> alquileres = new LinkedList<Alquiler>();
 			
-			Usuario user1 = new Usuario(reservas , alquileres);
-			this.add(user1);
+			Usuario user123 = new Usuario(reservas , alquileres);
+			this.add(user123);
 
 		} catch (Exception e) {
 			e.printStackTrace();

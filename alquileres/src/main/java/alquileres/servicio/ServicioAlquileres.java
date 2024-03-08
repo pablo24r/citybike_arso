@@ -2,6 +2,7 @@ package alquileres.servicio;
 
 import java.time.LocalDateTime;
 
+
 import alquileres.modelo.Alquiler;
 import alquileres.modelo.Reserva;
 import alquileres.modelo.Usuario;
@@ -19,7 +20,7 @@ public class ServicioAlquileres implements IServicioAlquileres {
 	@Override
 	public void reservar(String idUsuario, String idBicicleta) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
-
+		System.out.println("User:" + usuario.toString());
 		if (usuario.reservaActiva() != null || usuario.alquiler()!=null|| usuario.bloqueado()
 				|| usuario.superaTiempo())
 			throw new IllegalArgumentException("No se puede realizar la reserva.");
@@ -48,9 +49,8 @@ public class ServicioAlquileres implements IServicioAlquileres {
 	}
 
 	@Override
-	public void alquilar(String idUsuario, String idBicicleta) throws RepositorioException, EntidadNoEncontrada {
+	public void alquilar(String idUsuario, String idBicicleta) throws RepositorioException, EntidadNoEncontrada {		
 		Usuario usuario = repositorio.getById(idUsuario);
-
 		if (usuario.reservaActiva() != null || usuario.alquiler()!=null || usuario.bloqueado()
 				|| usuario.superaTiempo())
 			throw new IllegalArgumentException("No se puede realizar el alquiler.");
