@@ -7,6 +7,7 @@ import org.bson.Document;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.codecs.pojo.annotations.BsonRepresentation;
+import org.bson.types.ObjectId;
 
 public class Reserva {
 
@@ -30,6 +31,7 @@ public class Reserva {
 	}
 
 	public Reserva(String idBicicleta, LocalDateTime creada, LocalDateTime caducidad) {
+        this.id = new ObjectId().toString(); // Asignar un nuevo ObjectId como identificador
 		this.idBicicleta = idBicicleta;
 		this.creada = creada;
 		this.caducidad = caducidad;
@@ -90,6 +92,17 @@ public class Reserva {
 		document.append("caducada", caducada);
 		return document;
 	}
+	
+    public static Reserva fromDocument(Document document) {
+        Reserva reserva = new Reserva();
+        reserva.setId(document.getObjectId("_id").toString());
+        reserva.setIdBicicleta(document.getString("idBicicleta"));
+        reserva.setCreada(document.get("creada", LocalDateTime.class));
+        reserva.setCaducidad(document.get("caducidad", LocalDateTime.class));
+        reserva.setCaducada(document.getBoolean("caducada"));
+
+        return reserva;
+    }
 
 	@Override
 	public String toString() {

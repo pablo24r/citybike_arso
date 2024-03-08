@@ -3,12 +3,14 @@ package alquileres.modelo;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.bson.BsonType;
 import org.bson.Document;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.codecs.pojo.annotations.BsonRepresentation;
+import org.bson.types.ObjectId;
 
 import repositorio.Identificable;
 
@@ -23,8 +25,14 @@ public class Usuario implements Identificable {
 
 	@BsonProperty(value = "alquileres")
 	private List<Alquiler> alquileres = new ArrayList<Alquiler>();
-
+	
+	
+	@BsonProperty(value = "numero")
+	private int numero;
+	
 	public Usuario() {
+        this.id = new ObjectId().toString(); // Asignar un nuevo ObjectId como identificador
+		this.numero = new Random().nextInt();
 
 	}
 
@@ -32,6 +40,15 @@ public class Usuario implements Identificable {
 		this.reservas = reservas;
 		this.alquileres = alquileres;
 	}
+
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+
+	public void setAlquileres(List<Alquiler> alquileres) {
+		this.alquileres = alquileres;
+	}
+
 
 	@Override
 	public String getId() {
@@ -87,7 +104,7 @@ public class Usuario implements Identificable {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", reservas=" + reservas + ", alquileres=" + alquileres + "]";
+		return "Usuario [id=" + id + ", reservas=" + reservas + ", alquileres=" + alquileres + " numero= " + numero +"]";
 	}
 
 	public Document toDocument() {
@@ -103,17 +120,51 @@ public class Usuario implements Identificable {
 			alquileresDocument.add(alquiler.toDocument());
 		}
 		document.append("alquileres", alquileresDocument);
+		document.append("numero", numero);
 		return document;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static Usuario fromDocument(Document document) {
-		String id = document.getString("id");
-		List<Reserva> reservas = (List<Reserva>) document.get("reservas", List.class);
-		List<Alquiler> alquileres = (List<Alquiler>) document.get("alquileres", List.class);
-		Usuario usuario = new Usuario(reservas, alquileres);
-		usuario.setId(id);
-		return usuario;
+	public int getNumero() {
+		return numero;
 	}
 
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+	@SuppressWarnings("unchecked")
+    public static Usuario fromDocument(Document document) {
+        Usuario usuario = new Usuario();
+        usuario.setId(document.getObjectId("_id").toString());
+
+        // Recuperar y establecer las listas de reservas y alquileres desde el documento
+        List<Document> reservasDocument = (List<Document>) document.get("reservas");
+        List<Document> alquileresDocument = (List<Document>) document.get("alquileres");
+
+        List<Reserva> reservas = new ArrayList<>();
+        List<Alquiler> alquileres = new ArrayList<>();
+
+        // Convertir documentos a objetos Reserva y Alquiler y agregar a las listas
+        if (reservasDocument != null) {
+            for (Document reservaDoc : reservasDocument) {
+                Reserva reserva = Reserva.fromDocument(reservaDoc);
+                reservas.add(reserva);
+            }
+        }
+
+        if (alquileresDocument != null) {
+            for (Document alquilerDoc : alquileresDocument) {
+                Alquiler alquiler = Alquiler.fromDocument(alquilerDoc);
+                alquileres.add(alquiler);
+            }
+        }
+
+        // Establecer las listas en el usuario
+        usuario.reservas= reservas;
+        usuario.alquileres= alquileres;
+
+        return usuario;
+    }
+
+	
 }

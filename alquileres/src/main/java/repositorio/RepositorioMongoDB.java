@@ -11,13 +11,6 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 
-import alquileres.modelo.Alquiler;
-import alquileres.modelo.Reserva;
-import alquileres.modelo.Usuario;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
@@ -25,56 +18,42 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
+import alquileres.modelo.Usuario;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class RepositorioMongoDB<T extends Identificable> implements Repositorio<T, String> {
 
-	MongoCollection<T> coleccion;
+	protected MongoCollection<T> coleccion;
 
-	@SuppressWarnings("unchecked")
-	public RepositorioMongoDB() {
-		String connectionString = "mongodb+srv://pabloraullopezmartinez:ARSO2024@clusterarso.w0erjqo.mongodb.net/?retryWrites=true&w=majority&appName=ClusterARSO";
+	public RepositorioMongoDB(String connectionString, String databaseName, String collectionName,
+			Class<T> entityType) {
 		MongoClient mongoClient = MongoClients.create(connectionString);
-		MongoDatabase database = mongoClient.getDatabase("ClusterARSO");
+		MongoDatabase database = mongoClient.getDatabase(databaseName);
 
 		CodecRegistry defaultCodecRegistry = CodecRegistries.fromRegistries(
 				MongoClientSettings.getDefaultCodecRegistry(),
 				CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 
-		coleccion = (MongoCollection<T>) database.getCollection("usuario", Usuario.class)
-				.withCodecRegistry(defaultCodecRegistry);
-
+		coleccion = database.getCollection(collectionName, entityType).withCodecRegistry(defaultCodecRegistry);
 	}
 
 	public Document newDocument(T entity) {
 		Document d = new Document();
 		d.append("usuario", entity.getId());
-		if (entity.getClass().equals(Usuario.class)) {
-			List<Document> reservasDocument = new ArrayList<Document>();
-			for (Reserva reserva : ((Usuario) entity).getReservas()) {
-				reservasDocument.add(reserva.toDocument());
-			}
-			d.append("reservas", reservasDocument);
-			List<Document> alquileresDocument = new ArrayList<Document>();
-			for (Alquiler alquiler : ((Usuario) entity).getAlquileres()) {
-				alquileresDocument.add(alquiler.toDocument());
-			}
-			d.append("alquileres", alquileresDocument);
-			System.out.println("Documento: " + d.toString());
-		}
 
-		return d;
+		d.append("reservas", ((Usuario) entity).getReservas());
+
+		d.append("alquileres", ((Usuario) entity).getAlquileres());
+
+		d.append("numero", ((Usuario) entity).getNumero());
+		System.out.println("Documento: " + d.toString());
+	
+
+	return d;
+
 	}
-	
-//	public Document newDocument(T entity) {
-//		Document d = new Document();
-//		d.append("usuario", entity.getId());
-//		if (entity.getClass().equals(Usuario.class)) {
-//			d.append("reservas", ((Usuario) entity).getReservas());
-//			d.append("alquileres", ((Usuario) entity).getAlquileres());
-//		}
-//
-//		return d;
-//	}
-	
 
 	public static String insertOneDocument(MongoCollection<Document> coleccion, Document d) {
 		InsertOneResult result = coleccion.insertOne(d);
@@ -92,13 +71,10 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 
 	@Override
 	public void update(T entity) throws RepositorioException, EntidadNoEncontrada {
-		// Filtro para buscar el documento por su ID
-		ObjectId objectId;
-		objectId = new ObjectId(entity.getId());
+		ObjectId objectId = new ObjectId(entity.getId());
 		Bson filter = Filters.eq("_id", objectId);
-		// Reemplaza un documento en la colección según el filtro especificado
 		UpdateResult result = coleccion.replaceOne(filter, entity);
-		// Si no se encontro el documento, lanzar excepción
+
 		if (result.getMatchedCount() == 0) {
 			throw new EntidadNoEncontrada("No se encontró el documento con ID: " + entity.getId());
 		}
@@ -106,12 +82,10 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 
 	@Override
 	public void delete(T entity) throws RepositorioException, EntidadNoEncontrada {
-		// Filtro para buscar el documento por su ID
-		ObjectId objectId;
-		objectId = new ObjectId(entity.getId());
-		Bson filter = Filters.eq("_id", objectId); // Eliminar el documento
+		ObjectId objectId = new ObjectId(entity.getId());
+		Bson filter = Filters.eq("_id", objectId);
 		DeleteResult result = coleccion.deleteOne(filter);
-		// Si no se eliminó el documento, lanzar excepción
+
 		if (result.getDeletedCount() == 0) {
 			throw new EntidadNoEncontrada("No se encontró el documento con ID: " + entity.getId());
 		}
@@ -119,19 +93,15 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 
 	@Override
 	public T getById(String id) throws RepositorioException, EntidadNoEncontrada {
-		// Convertir la cadena de texto 'id' en un ObjectId
 		ObjectId objectId;
 		try {
 			objectId = new ObjectId(id);
 		} catch (IllegalArgumentException e) {
 			throw new EntidadNoEncontrada("El ID proporcionado no es válido: " + id);
 		}
-		// Filtro para buscar el documento por su ID
 		Bson filter = Filters.eq("_id", objectId);
-		// buscar el primer documento que satisfaga el filtro en este caso al buscar por
-		// ID solo deberia haber un match
 		T entity = coleccion.find(filter).first();
-		// Si no se encontró el documento, lanzar excepción
+
 		if (entity == null) {
 			throw new EntidadNoEncontrada("No se encontró el documento con ID: " + id);
 		}
@@ -139,27 +109,24 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 	}
 
 	@Override
-	public java.util.List<T> getAll() throws RepositorioException {
-		// Lista para almacenar los documentos
+	public List<T> getAll() throws RepositorioException {
 		List<T> entities = new ArrayList<>();
-		// Obtener un cursor a todos los documentos
 		MongoCursor<T> cursor = coleccion.find().iterator();
+
 		try {
-			// Iterar sobre el cursor para obtener cada documento
 			while (cursor.hasNext()) {
 				T entity = cursor.next();
 				entities.add(entity);
 			}
 		} finally {
-			// Cerrar el cursor para liberar recursos
 			cursor.close();
 		}
 		return entities;
 	}
 
 	@Override
-	public java.util.List<String> getIds() throws RepositorioException {
-		// Implementar la lógica para obtener todos los IDs de la base de datos MongoDB
+	public List<String> getIds() throws RepositorioException {
+		// Implementa la lógica para obtener todos los IDs de la base de datos MongoDB
 		// ...
 		return null;
 	}
