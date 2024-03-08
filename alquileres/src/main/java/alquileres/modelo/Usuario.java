@@ -1,7 +1,7 @@
 package alquileres.modelo;
 
 import java.time.LocalDateTime;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.BsonType;
@@ -19,10 +19,10 @@ public class Usuario implements Identificable {
 	private String id;
 
 	@BsonProperty(value = "reservas")
-	private List<Reserva> reservas = new LinkedList<Reserva>();
+	private List<Reserva> reservas = new ArrayList<Reserva>();
 
 	@BsonProperty(value = "alquileres")
-	private List<Alquiler> alquileres = new LinkedList<Alquiler>();
+	private List<Alquiler> alquileres = new ArrayList<Alquiler>();
 
 	public Usuario() {
 
@@ -91,17 +91,29 @@ public class Usuario implements Identificable {
 	}
 
 	public Document toDocument() {
-		Document d = new Document();
-		d.append("id", id);
-		d.append("reservas", getReservas());
-		d.append("alquileres", getAlquileres());
-		return d;
+		Document document = new Document();
+		document.append("id", id);
+		List<Document> reservasDocument = new ArrayList<>();
+		for (Reserva reserva : reservas) {
+			reservasDocument.add(reserva.toDocument());
+		}
+		document.append("reservas", reservasDocument);
+		List<Document> alquileresDocument = new ArrayList<>();
+		for (Alquiler alquiler : alquileres) {
+			alquileresDocument.add(alquiler.toDocument());
+		}
+		document.append("alquileres", alquileresDocument);
+		return document;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static Usuario fromDocument(Document document) {
-		List<Reserva> reservas = (List<Reserva>) document.get("reservas");
-		List<Alquiler> alquileres = (List<Alquiler>) document.get("alquileres");
-		return new Usuario(reservas, alquileres);
+		String id = document.getString("id");
+		List<Reserva> reservas = (List<Reserva>) document.get("reservas", List.class);
+		List<Alquiler> alquileres = (List<Alquiler>) document.get("alquileres", List.class);
+		Usuario usuario = new Usuario(reservas, alquileres);
+		usuario.setId(id);
+		return usuario;
 	}
 
 }

@@ -3,6 +3,7 @@ package alquileres.modelo;
 import java.time.LocalDateTime;
 
 import org.bson.BsonType;
+import org.bson.Document;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.codecs.pojo.annotations.BsonRepresentation;
@@ -78,6 +79,16 @@ public class Reserva {
 
 	public boolean activa() {
 		return !this.caducada;
+	}
+
+	public Document toDocument() {
+		Document document = new Document();
+		document.append("id", id);
+		document.append("idBicicleta", idBicicleta);
+		document.append("creada", creada);
+		document.append("caducidad", caducidad);
+		document.append("caducada", caducada);
+		return document;
 	}
 
 	@Override

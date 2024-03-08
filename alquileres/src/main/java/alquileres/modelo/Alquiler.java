@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 import org.bson.BsonType;
+import org.bson.Document;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.codecs.pojo.annotations.BsonRepresentation;
@@ -73,6 +74,20 @@ public class Alquiler {
 		LocalDateTime momentoFinal = (fin != null) ? fin : ahora;
 
 		return ChronoUnit.MINUTES.between(inicio, momentoFinal);
+	}
+
+	public Document toDocument() {
+		Document document = new Document();
+		document.append("id", id);
+		document.append("idBicicleta", idBicicleta);
+		document.append("inicio", inicio);
+		document.append("fin", fin);
+		return document;
+	}
+
+	@Override
+	public String toString() {
+		return "Alquiler [id=" + id + ", idBicicleta=" + idBicicleta + ", inicio=" + inicio + ", fin=" + fin + "]";
 	}
 
 }

@@ -11,6 +11,8 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.InsertOneResult;
 import com.mongodb.client.result.UpdateResult;
 
+import alquileres.modelo.Alquiler;
+import alquileres.modelo.Reserva;
 import alquileres.modelo.Usuario;
 
 import java.util.ArrayList;
@@ -27,8 +29,9 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 
 	MongoCollection<T> coleccion;
 
+	@SuppressWarnings("unchecked")
 	public RepositorioMongoDB() {
-		String connectionString = "mongodb+srv://arso:arso@cluster0.7z0ykhs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+		String connectionString = "mongodb+srv://pabloraullopezmartinez:ARSO2024@clusterarso.w0erjqo.mongodb.net/?retryWrites=true&w=majority&appName=ClusterARSO";
 		MongoClient mongoClient = MongoClients.create(connectionString);
 		MongoDatabase database = mongoClient.getDatabase("ClusterARSO");
 
@@ -45,12 +48,33 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 		Document d = new Document();
 		d.append("usuario", entity.getId());
 		if (entity.getClass().equals(Usuario.class)) {
-			d.append("reservas", ((Usuario) entity).getReservas());
-			d.append("alquileres", ((Usuario) entity).getAlquileres());
+			List<Document> reservasDocument = new ArrayList<Document>();
+			for (Reserva reserva : ((Usuario) entity).getReservas()) {
+				reservasDocument.add(reserva.toDocument());
+			}
+			d.append("reservas", reservasDocument);
+			List<Document> alquileresDocument = new ArrayList<Document>();
+			for (Alquiler alquiler : ((Usuario) entity).getAlquileres()) {
+				alquileresDocument.add(alquiler.toDocument());
+			}
+			d.append("alquileres", alquileresDocument);
+			System.out.println("Documento: " + d.toString());
 		}
 
 		return d;
 	}
+	
+//	public Document newDocument(T entity) {
+//		Document d = new Document();
+//		d.append("usuario", entity.getId());
+//		if (entity.getClass().equals(Usuario.class)) {
+//			d.append("reservas", ((Usuario) entity).getReservas());
+//			d.append("alquileres", ((Usuario) entity).getAlquileres());
+//		}
+//
+//		return d;
+//	}
+	
 
 	public static String insertOneDocument(MongoCollection<Document> coleccion, Document d) {
 		InsertOneResult result = coleccion.insertOne(d);
