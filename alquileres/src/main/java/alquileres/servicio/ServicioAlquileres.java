@@ -1,7 +1,9 @@
 package alquileres.servicio;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
+import javax.jws.WebService;
 
 import alquileres.modelo.Alquiler;
 import alquileres.modelo.Reserva;
@@ -12,15 +14,16 @@ import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import repositorio.RepositorioException;
 
-public class ServicioAlquileres implements IServicioAlquileres, IServicioEstaciones{
+@WebService(endpointInterface = "alquileres.servicio.IServicioAlquileres", targetNamespace = "http://um.es/arso")
+public class ServicioAlquileres implements IServicioAlquileres, IServicioEstaciones {
 
 	private Repositorio<Usuario, String> repositorio = FactoriaRepositorios.getRepositorio(Usuario.class);
 	private IServicioEstaciones servicioEstaciones = this;
-	
+
 	@Override
 	public void reservar(String idUsuario, String idBicicleta) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
-		if (usuario.reservaActiva() != null || usuario.alquiler()!=null|| usuario.bloqueado()
+		if (usuario.reservaActiva() != null || usuario.alquiler() != null || usuario.bloqueado()
 				|| usuario.superaTiempo())
 			throw new IllegalArgumentException("No se puede realizar la reserva.");
 		else {
@@ -40,7 +43,8 @@ public class ServicioAlquileres implements IServicioAlquileres, IServicioEstacio
 			throw new IllegalArgumentException("El usuario no tiene ninguna reserva activa.");
 		else {
 			Reserva reservaActiva = usuario.reservaActiva();
-			Alquiler alquiler = new Alquiler(reservaActiva.getIdBicicleta(), LocalDateTime.now(), null);
+			String id = obtenerId();
+			Alquiler alquiler = new Alquiler(id, reservaActiva.getIdBicicleta(), LocalDateTime.now(), null);
 			usuario.getAlquileres().add(alquiler);
 			usuario.getReservas().remove(reservaActiva);
 			System.out.println("Alquiler creado.");
@@ -49,13 +53,14 @@ public class ServicioAlquileres implements IServicioAlquileres, IServicioEstacio
 	}
 
 	@Override
-	public void alquilar(String idUsuario, String idBicicleta) throws RepositorioException, EntidadNoEncontrada {		
+	public void alquilar(String idUsuario, String idBicicleta) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
-		if (usuario.reservaActiva() != null || usuario.alquiler()!=null || usuario.bloqueado()
+		if (usuario.reservaActiva() != null || usuario.alquiler() != null || usuario.bloqueado()
 				|| usuario.superaTiempo())
 			throw new IllegalArgumentException("No se puede realizar el alquiler.");
 		else {
-			Alquiler alquiler = new Alquiler(idBicicleta, LocalDateTime.now(), null);
+			String id = obtenerId();
+			Alquiler alquiler = new Alquiler(id, idBicicleta, LocalDateTime.now(), null);
 			usuario.getAlquileres().add(alquiler);
 			repositorio.update(usuario);
 			System.out.println("Alquiler creado.");
@@ -84,7 +89,7 @@ public class ServicioAlquileres implements IServicioAlquileres, IServicioEstacio
 	public void dejarBicicleta(String idUsuario, String idEstacion) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
 
-		if (usuario.alquiler()==null || !servicioEstaciones.hayHuecoDisponible())
+		if (usuario.alquiler() == null || !servicioEstaciones.hayHuecoDisponible())
 			throw new IllegalArgumentException("No se puede dejar la bicicleta.");
 		else {
 			usuario.alquiler().setFin(LocalDateTime.now());
@@ -104,6 +109,24 @@ public class ServicioAlquileres implements IServicioAlquileres, IServicioEstacio
 				usuario.getReservas().remove(r);
 		}
 
+	}
+
+	@Override
+	public Alquiler recuperarAlquiler(String idUsuario, String idAlquiler)
+			throws RepositorioException, EntidadNoEncontrada {
+
+		Usuario usuario = repositorio.getById(idUsuario);
+		for (Alquiler alquiler : usuario.getAlquileres()) {
+			if (alquiler.getId().equals(idAlquiler))
+				return alquiler;
+		}
+		return null;
+	}
+
+	@Override
+	public String obtenerId() {
+		UUID uuid = UUID.randomUUID();
+		return uuid.toString();
 	}
 
 }

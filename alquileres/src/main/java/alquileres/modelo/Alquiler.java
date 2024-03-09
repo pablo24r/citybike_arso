@@ -8,6 +8,8 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 
 public class Alquiler {
 
+	@BsonProperty(value = "id")
+	private String id;
 	@BsonProperty(value = "idBicicleta")
 	private String idBicicleta;
 	@BsonProperty(value = "inicio")
@@ -19,13 +21,17 @@ public class Alquiler {
 
 	}
 
-	public Alquiler(String idBicicleta, LocalDateTime inicio, LocalDateTime fin) {
+	public Alquiler(String id, String idBicicleta, LocalDateTime inicio, LocalDateTime fin) {
+		this.id = id;
 		this.idBicicleta = idBicicleta;
 		this.inicio = inicio;
 		this.fin = fin;
 	}
 
-	
+	public String getId() {
+		return id;
+	}
+
 	public String getIdBicicleta() {
 		return idBicicleta;
 	}
@@ -73,15 +79,16 @@ public class Alquiler {
 		document.append("fin", fin);
 		return document;
 	}
-	
-    public static Alquiler fromDocument(Document document) {
-        Alquiler alquiler = new Alquiler();
-        alquiler.setIdBicicleta(document.getString("idBicicleta"));
-        alquiler.setInicio(document.get("inicio", LocalDateTime.class));
-        alquiler.setFin(document.get("fin", LocalDateTime.class));
 
-        return alquiler;
-    }
+	public static Alquiler fromDocument(Document document) {
+		Alquiler alquiler = new Alquiler();
+		alquiler.setIdBicicleta(document.getString("idBicicleta"));
+		alquiler.setInicio(document.get("inicio", LocalDateTime.class));
+		alquiler.setFin(document.get("fin", LocalDateTime.class));
+
+		return alquiler;
+	}
+
 	@Override
 	public String toString() {
 		return "Alquiler [idBicicleta=" + idBicicleta + ", inicio=" + inicio + ", fin=" + fin + "]";
