@@ -2,18 +2,11 @@ package alquileres.modelo;
 
 import java.time.LocalDateTime;
 
-import org.bson.BsonType;
 import org.bson.Document;
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.bson.codecs.pojo.annotations.BsonRepresentation;
-import org.bson.types.ObjectId;
+
 
 public class Reserva {
-
-	@BsonId
-	@BsonRepresentation(BsonType.OBJECT_ID)
-	private String id;
 
 	@BsonProperty(value = "idBicicleta")
 	private String idBicicleta;
@@ -31,18 +24,9 @@ public class Reserva {
 	}
 
 	public Reserva(String idBicicleta, LocalDateTime creada, LocalDateTime caducidad) {
-        this.id = new ObjectId().toString(); // Asignar un nuevo ObjectId como identificador
 		this.idBicicleta = idBicicleta;
 		this.creada = creada;
 		this.caducidad = caducidad;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 	public String getIdBicicleta() {
@@ -85,7 +69,6 @@ public class Reserva {
 
 	public Document toDocument() {
 		Document document = new Document();
-		document.append("id", id);
 		document.append("idBicicleta", idBicicleta);
 		document.append("creada", creada);
 		document.append("caducidad", caducidad);
@@ -95,7 +78,6 @@ public class Reserva {
 	
     public static Reserva fromDocument(Document document) {
         Reserva reserva = new Reserva();
-        reserva.setId(document.getObjectId("_id").toString());
         reserva.setIdBicicleta(document.getString("idBicicleta"));
         reserva.setCreada(document.get("creada", LocalDateTime.class));
         reserva.setCaducidad(document.get("caducidad", LocalDateTime.class));
@@ -106,7 +88,7 @@ public class Reserva {
 
 	@Override
 	public String toString() {
-		return "Reserva [id=" + id + ", idBicicleta=" + idBicicleta + ", creada=" + creada + ", caducidad=" + caducidad
+		return "Reserva [idBicicleta=" + idBicicleta + ", creada=" + creada + ", caducidad=" + caducidad
 				+ ", caducada=" + caducada + "]";
 	}
 

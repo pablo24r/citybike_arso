@@ -141,8 +141,7 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 
 	@Override
 	public List<String> getIds() throws RepositorioException {
-		// Implementa la lógica para obtener todos los IDs de la base de datos MongoDB
-		// ...
+
 		return null;
 	}
 }

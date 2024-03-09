@@ -37,14 +37,6 @@ public class Usuario implements Identificable {
 		this.alquileres = alquileres;
 	}
 
-	public void setReservas(List<Reserva> reservas) {
-		this.reservas = reservas;
-	}
-
-	public void setAlquileres(List<Alquiler> alquileres) {
-		this.alquileres = alquileres;
-	}
-
 
 	@Override
 	public String getId() {
@@ -62,6 +54,14 @@ public class Usuario implements Identificable {
 
 	public List<Alquiler> getAlquileres() {
 		return alquileres;
+	}
+	
+	public void setReservas(List<Reserva> reservas) {
+		this.reservas = reservas;
+	}
+
+	public void setAlquileres(List<Alquiler> alquileres) {
+		this.alquileres = alquileres;
 	}
 
 	// Métodos

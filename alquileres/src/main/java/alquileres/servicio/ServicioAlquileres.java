@@ -12,21 +12,21 @@ import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import repositorio.RepositorioException;
 
-public class ServicioAlquileres implements IServicioAlquileres {
+public class ServicioAlquileres implements IServicioAlquileres, IServicioEstaciones{
 
 	private Repositorio<Usuario, String> repositorio = FactoriaRepositorios.getRepositorio(Usuario.class);
-	private IServicioEstaciones servicioEstaciones;
+	private IServicioEstaciones servicioEstaciones = this;
 	
 	@Override
 	public void reservar(String idUsuario, String idBicicleta) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
-		System.out.println("User:" + usuario.toString());
 		if (usuario.reservaActiva() != null || usuario.alquiler()!=null|| usuario.bloqueado()
 				|| usuario.superaTiempo())
 			throw new IllegalArgumentException("No se puede realizar la reserva.");
 		else {
 			Reserva reserva = new Reserva(idBicicleta, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
 			usuario.getReservas().add(reserva);
+			repositorio.update(usuario);
 			System.out.println("Reserva creada.");
 		}
 
@@ -57,6 +57,7 @@ public class ServicioAlquileres implements IServicioAlquileres {
 		else {
 			Alquiler alquiler = new Alquiler(idBicicleta, LocalDateTime.now(), null);
 			usuario.getAlquileres().add(alquiler);
+			repositorio.update(usuario);
 			System.out.println("Alquiler creado.");
 		}
 
@@ -83,11 +84,12 @@ public class ServicioAlquileres implements IServicioAlquileres {
 	public void dejarBicicleta(String idUsuario, String idEstacion) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
 
-		if (usuario.alquiler()!=null || !servicioEstaciones.hayHuecoDisponible())
+		if (usuario.alquiler()==null || !servicioEstaciones.hayHuecoDisponible())
 			throw new IllegalArgumentException("No se puede dejar la bicicleta.");
 		else {
 			usuario.alquiler().setFin(LocalDateTime.now());
 			servicioEstaciones.dejarBicicleta();
+			repositorio.update(usuario);
 			System.out.println("Bicicleta dejada en la estación.");
 		}
 

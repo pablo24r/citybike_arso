@@ -3,18 +3,10 @@ package alquileres.modelo;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import org.bson.BsonType;
 import org.bson.Document;
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.bson.codecs.pojo.annotations.BsonRepresentation;
-import org.bson.types.ObjectId;
 
 public class Alquiler {
-
-	@BsonId
-	@BsonRepresentation(BsonType.OBJECT_ID)
-	private String id;
 
 	@BsonProperty(value = "idBicicleta")
 	private String idBicicleta;
@@ -28,19 +20,11 @@ public class Alquiler {
 	}
 
 	public Alquiler(String idBicicleta, LocalDateTime inicio, LocalDateTime fin) {
-        this.id = new ObjectId().toString(); // Asignar un nuevo ObjectId como identificador
 		this.idBicicleta = idBicicleta;
 		this.inicio = inicio;
 		this.fin = fin;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 	
 	public String getIdBicicleta() {
 		return idBicicleta;
@@ -84,7 +68,6 @@ public class Alquiler {
 
 	public Document toDocument() {
 		Document document = new Document();
-		document.append("id", id);
 		document.append("idBicicleta", idBicicleta);
 		document.append("inicio", inicio);
 		document.append("fin", fin);
@@ -93,7 +76,6 @@ public class Alquiler {
 	
     public static Alquiler fromDocument(Document document) {
         Alquiler alquiler = new Alquiler();
-        alquiler.setId(document.getObjectId("_id").toString());
         alquiler.setIdBicicleta(document.getString("idBicicleta"));
         alquiler.setInicio(document.get("inicio", LocalDateTime.class));
         alquiler.setFin(document.get("fin", LocalDateTime.class));
@@ -102,7 +84,7 @@ public class Alquiler {
     }
 	@Override
 	public String toString() {
-		return "Alquiler [id=" + id + ", idBicicleta=" + idBicicleta + ", inicio=" + inicio + ", fin=" + fin + "]";
+		return "Alquiler [idBicicleta=" + idBicicleta + ", inicio=" + inicio + ", fin=" + fin + "]";
 	}
 
 }
