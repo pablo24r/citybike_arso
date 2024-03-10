@@ -28,7 +28,7 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 	protected MongoCollection<T> coleccion;
 
 	public RepositorioMongoDB() {
-		String connectionString = "mongodb+srv://pabloraullopezmartinez:ARSO2024@clusterarso.w0erjqo.mongodb.net/?retryWrites=true&w=majority&appName=ClusterARSO";
+		String connectionString = "mongodb://arso:arso@ac-zbd3jyk-shard-00-00.rshlvvr.mongodb.net:27017,ac-zbd3jyk-shard-00-01.rshlvvr.mongodb.net:27017,ac-zbd3jyk-shard-00-02.rshlvvr.mongodb.net:27017/?ssl=true&replicaSet=atlas-145642-shard-0&authSource=admin&retryWrites=true&w=majority&appName=ClusterARSO";
 		String databaseName = "ClusterARSO";
 		String collectionName = "usuarios";
 
@@ -69,8 +69,8 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 
 	}
 
-	public static String insertOneDocument(MongoCollection<Usuario> coleccion, Usuario user) {
-		InsertOneResult result = coleccion.insertOne(user);
+	public static String insertOneDocument(MongoCollection<Document> coleccion, Document d) {
+		InsertOneResult result = coleccion.insertOne(d);
 
 		if (result.getInsertedId() != null)
 			return result.getInsertedId().asObjectId().getValue().toString();
@@ -80,7 +80,7 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 	@SuppressWarnings("unchecked")
 	@Override
 	public String add(T entity) throws RepositorioException {
-		return insertOneDocument((MongoCollection<Usuario>) coleccion, (Usuario) entity);
+		return insertOneDocument((MongoCollection<Document>) coleccion, newDocument(entity));
 	}
 
 	@Override
