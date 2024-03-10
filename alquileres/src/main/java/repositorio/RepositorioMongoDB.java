@@ -31,7 +31,7 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 		String connectionString = "mongodb+srv://pabloraullopezmartinez:ARSO2024@clusterarso.w0erjqo.mongodb.net/?retryWrites=true&w=majority&appName=ClusterARSO";
 		String databaseName = "ClusterARSO";
 		String collectionName = "usuarios";
-	
+
 		MongoClient mongoClient = MongoClients.create(connectionString);
 		MongoDatabase database = mongoClient.getDatabase(databaseName);
 
@@ -39,7 +39,7 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 				MongoClientSettings.getDefaultCodecRegistry(),
 				CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 		@SuppressWarnings("unchecked")
-		Class <T> entityType = (Class<T>) Usuario.class;
+		Class<T> entityType = (Class<T>) Usuario.class;
 		coleccion = database.getCollection(collectionName, entityType).withCodecRegistry(defaultCodecRegistry);
 	}
 
@@ -63,15 +63,14 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 
 		d.append("alquileres", ((Usuario) entity).getAlquileres());
 
-		//System.out.println("Documento: " + d.toString());
-	
+		// System.out.println("Documento: " + d.toString());
 
-	return d;
+		return d;
 
 	}
 
-	public static String insertOneDocument(MongoCollection<Document> coleccion, Document d) {
-		InsertOneResult result = coleccion.insertOne(d);
+	public static String insertOneDocument(MongoCollection<Usuario> coleccion, Usuario user) {
+		InsertOneResult result = coleccion.insertOne(user);
 
 		if (result.getInsertedId() != null)
 			return result.getInsertedId().asObjectId().getValue().toString();
@@ -81,7 +80,7 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 	@SuppressWarnings("unchecked")
 	@Override
 	public String add(T entity) throws RepositorioException {
-		return insertOneDocument((MongoCollection<Document>) coleccion, newDocument(entity));
+		return insertOneDocument((MongoCollection<Usuario>) coleccion, (Usuario) entity);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package saludo.soap;
+package cliente.programa;
 
 import es.um.arso.IServicioAlquileres;
 import es.um.arso.ServicioAlquileresService;
@@ -11,8 +11,6 @@ public class Programa {
 		IServicioAlquileres puertoAlq = servicioAlq.getServicioAlquileresPort();
 		System.out.println(puertoAlq.obtenerId());
 
-//		SaludoImplService servicio = new SaludoImplService();
-//		Saludo puerto = servicio.getSaludoImplPort();
-//		System.out.println(puerto.getSaludo("Pepe"));
+		
 	}
 }

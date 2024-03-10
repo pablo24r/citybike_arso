@@ -1,6 +1,7 @@
 package alquileres.servicio;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import javax.jws.WebService;
@@ -43,8 +44,7 @@ public class ServicioAlquileres implements IServicioAlquileres, IServicioEstacio
 			throw new IllegalArgumentException("El usuario no tiene ninguna reserva activa.");
 		else {
 			Reserva reservaActiva = usuario.reservaActiva();
-			String id = obtenerId();
-			Alquiler alquiler = new Alquiler(id, reservaActiva.getIdBicicleta(), LocalDateTime.now(), null);
+			Alquiler alquiler = new Alquiler(reservaActiva.getIdBicicleta(), LocalDateTime.now(), null);
 			usuario.getAlquileres().add(alquiler);
 			usuario.getReservas().remove(reservaActiva);
 			System.out.println("Alquiler creado.");
@@ -59,8 +59,7 @@ public class ServicioAlquileres implements IServicioAlquileres, IServicioEstacio
 				|| usuario.superaTiempo())
 			throw new IllegalArgumentException("No se puede realizar el alquiler.");
 		else {
-			String id = obtenerId();
-			Alquiler alquiler = new Alquiler(id, idBicicleta, LocalDateTime.now(), null);
+			Alquiler alquiler = new Alquiler(idBicicleta, LocalDateTime.now(), null);
 			usuario.getAlquileres().add(alquiler);
 			repositorio.update(usuario);
 			System.out.println("Alquiler creado.");
@@ -112,20 +111,16 @@ public class ServicioAlquileres implements IServicioAlquileres, IServicioEstacio
 	}
 
 	@Override
-	public Alquiler recuperarAlquiler(String idUsuario, String idAlquiler)
-			throws RepositorioException, EntidadNoEncontrada {
+	public List<Alquiler> recuperarAlquileres(String idUsuario) throws RepositorioException, EntidadNoEncontrada {
 
 		Usuario usuario = repositorio.getById(idUsuario);
-		for (Alquiler alquiler : usuario.getAlquileres()) {
-			if (alquiler.getId().equals(idAlquiler))
-				return alquiler;
-		}
-		return null;
+		return usuario.getAlquileres();
 	}
 
 	@Override
 	public String obtenerId() {
 		UUID uuid = UUID.randomUUID();
+		System.out.println("Se ha generado un nuevo id: " + uuid);
 		return uuid.toString();
 	}
 

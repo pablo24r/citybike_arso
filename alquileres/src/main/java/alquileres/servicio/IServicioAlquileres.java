@@ -1,5 +1,7 @@
 package alquileres.servicio;
 
+import java.util.List;
+
 import javax.jws.WebService;
 
 import alquileres.modelo.Alquiler;
@@ -70,7 +72,7 @@ public interface IServicioAlquileres {
 	 * Recupera un alquiler de un usuario utilizando el identificador
 	 */
 
-	Alquiler recuperarAlquiler(String idUsuario, String idAlquiler) throws RepositorioException, EntidadNoEncontrada;
+	public List<Alquiler> recuperarAlquileres(String idUsuario) throws RepositorioException, EntidadNoEncontrada;
 
 	/*
 	 * Estable el id de un alquiler para que nunca haya dos con el mismo id

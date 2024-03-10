@@ -25,8 +25,8 @@ public class AlquileresControladorRest {
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getAlquiler(@PathParam("id") String id) throws Exception {
-		return Response.status(Response.Status.OK).entity(servicio.recuperarAlquiler(id, id)).build();
+	public Response prueba() throws Exception {
+		return Response.status(Response.Status.OK).entity(servicio.obtenerId()).build();
 	}
 
 }
