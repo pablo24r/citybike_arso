@@ -94,7 +94,7 @@ public class Usuario implements Identificable {
 		return alquileres.stream().filter(alquiler -> alquiler.activo()).findFirst().orElse(null);
 	}
 
-	public boolean bloqueado() {
+	public boolean isBloqueado() {
 		return reservasCaducadas() >= 3;
 	}
 

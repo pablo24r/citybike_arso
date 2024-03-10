@@ -24,10 +24,10 @@ public class ServicioAlquileres implements IServicioAlquileres, IServicioEstacio
 	@Override
 	public void reservar(String idUsuario, String idBicicleta) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
-		if (usuario.reservaActiva() != null || usuario.alquiler() != null || usuario.bloqueado()
-				|| usuario.superaTiempo())
+		if (usuario.reservaActiva() != null || usuario.alquiler() != null || usuario.isBloqueado()
+				|| usuario.superaTiempo()) {
 			throw new IllegalArgumentException("No se puede realizar la reserva.");
-		else {
+		} else {
 			Reserva reserva = new Reserva(idBicicleta, LocalDateTime.now(), LocalDateTime.now().plusMinutes(30));
 			usuario.getReservas().add(reserva);
 			repositorio.update(usuario);
@@ -55,7 +55,7 @@ public class ServicioAlquileres implements IServicioAlquileres, IServicioEstacio
 	@Override
 	public void alquilar(String idUsuario, String idBicicleta) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
-		if (usuario.reservaActiva() != null || usuario.alquiler() != null || usuario.bloqueado()
+		if (usuario.reservaActiva() != null || usuario.alquiler() != null || usuario.isBloqueado()
 				|| usuario.superaTiempo())
 			throw new IllegalArgumentException("No se puede realizar el alquiler.");
 		else {
@@ -75,7 +75,7 @@ public class ServicioAlquileres implements IServicioAlquileres, IServicioEstacio
 		historial += "\n ALQUILERES: " + usuario.getAlquileres().toString();
 		historial += "\n RESERVAS: " + usuario.getReservas().toString();
 		historial += "\n ESTADO DEL SERVICIO: ";
-		if (usuario.bloqueado())
+		if (usuario.isBloqueado())
 			historial += " Usuario bloqueado";
 		else {
 			historial += "\n\t Tiempo de uso hoy: " + usuario.tiempoUsoHoy();

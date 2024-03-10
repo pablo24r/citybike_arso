@@ -17,6 +17,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Path("auth")
 public class ControladorAuth {
 
+	// curl -X POST http://localhost:8080/api/auth/login -H "Content-Type:
+	// application/x-www-form-urlencoded" -d "username=pedro&password=usuario"
 	@POST
 	@PermitAll
 	@Path("/login")
@@ -27,7 +29,7 @@ public class ControladorAuth {
 			Date caducidad = Date.from(Instant.now().plusSeconds(3600)); // 1 hora de validez
 			String token = Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS256, "secreto")
 					.setExpiration(caducidad).compact();
-			return Response.ok(token+" | "+claims.get("roles")).build();
+			return Response.ok(token + " | " + claims.get("roles")).build();
 		} else {
 			return Response.status(Response.Status.UNAUTHORIZED).entity("Credenciales inválidas").build();
 		}
@@ -37,7 +39,13 @@ public class ControladorAuth {
 
 		Map<String, Object> claims = new HashMap<String, Object>();// el cuerpo del token
 		claims.put("sub", username);
-		claims.put("roles", "gestor");
+		if (password.equals("gestor")) {
+			System.out.println("El usuario "+username+" tiene el rol de gestor");
+			claims.put("roles", "gestor");
+		} else {
+			System.out.println("El usuario "+username+" tiene el rol de usuario");
+			claims.put("roles", "usuario");
+		}
 
 		return claims;
 	}
