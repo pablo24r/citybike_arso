@@ -2,13 +2,10 @@ package alquileres.servicio;
 
 import java.util.List;
 
-import javax.jws.WebService;
-
 import alquileres.modelo.Alquiler;
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 
-@WebService(targetNamespace = "http://um.es/arso")
 public interface IServicioAlquileres {
 
 	/**
