@@ -15,7 +15,7 @@ import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import repositorio.RepositorioException;
 
-@WebService(endpointInterface = "alquileres.servicio.IServicioAlquileres")
+@WebService(endpointInterface = "alquileres.servicio.IServicioAlquileres", targetNamespace = "http://um.es/arso")
 public class ServicioAlquileres implements IServicioAlquileres, IServicioEstaciones {
 
 	private Repositorio<Usuario, String> repositorio = FactoriaRepositorios.getRepositorio(Usuario.class);

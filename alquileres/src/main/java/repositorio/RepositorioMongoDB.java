@@ -69,18 +69,19 @@ public class RepositorioMongoDB<T extends Identificable> implements Repositorio<
 
 	}
 
-	public static String insertOneDocument(MongoCollection<Document> coleccion, Document d) {
-		InsertOneResult result = coleccion.insertOne(d);
+	private String insertOneDocument(T entity) {
+		if (coleccion != null) {
+			InsertOneResult result = coleccion.insertOne(entity);
 
-		if (result.getInsertedId() != null)
-			return result.getInsertedId().asObjectId().getValue().toString();
+			if (result.getInsertedId() != null)
+				return result.getInsertedId().asObjectId().getValue().toString();
+		}
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public String add(T entity) throws RepositorioException {
-		return insertOneDocument((MongoCollection<Document>) coleccion, newDocument(entity));
+		return insertOneDocument(entity);
 	}
 
 	@Override
