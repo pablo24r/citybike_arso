@@ -1,6 +1,7 @@
 package alquileres.rest;
 
 import javax.annotation.security.RolesAllowed;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import alquileres.servicio.*;
+import io.jsonwebtoken.Claims;
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 import servicio.FactoriaServicios;
@@ -21,6 +23,9 @@ import servicio.FactoriaServicios;
 public class AlquileresControladorRest {
 
 	private IServicioAlquileres servicio = FactoriaServicios.getServicio(IServicioAlquileres.class);
+
+	@Context
+	private HttpServletRequest servletRequest;
 
 	@Context
 	private UriInfo uriInfo;
@@ -35,6 +40,7 @@ public class AlquileresControladorRest {
 
 	@GET
 	@Path("{id}")
+	@RolesAllowed("gestor")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getHistorialUsuario(@PathParam("id") String idUsuario) {
 		try {
@@ -53,6 +59,12 @@ public class AlquileresControladorRest {
 	@Produces({ MediaType.APPLICATION_JSON })
 	@RolesAllowed("gestor")
 	public Response liberarUsuario(@PathParam("id") String idUsuario) {
+
+		if (this.servletRequest.getAttribute("claims") != null) {
+			Claims claims = (Claims) this.servletRequest.getAttribute("claims");
+			System.out.println("Usuario autenticado: " + claims.getSubject());
+			System.out.println("Roles: " + claims.get("roles"));
+		}
 
 		try {
 			// URL de acceso: http://localhost:8080/api/alquileres/{idUsuario}
