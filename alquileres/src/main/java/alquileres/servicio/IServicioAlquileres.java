@@ -5,6 +5,7 @@ import java.util.List;
 import javax.jws.WebService;
 
 import alquileres.modelo.Alquiler;
+import alquileres.modelo.Usuario;
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 
@@ -50,7 +51,7 @@ public interface IServicioAlquileres {
 	 * alquileres y reservas del usuario, y el estado del servicio (bloqueado,
 	 * tiempo de uso).
 	 */
-	String historialUsuario(String idUsuario) throws RepositorioException, EntidadNoEncontrada;
+	Usuario historialUsuario(String idUsuario) throws RepositorioException, EntidadNoEncontrada;
 
 	/**
 	 * dejarBicicleta(idUsuario, idEstacion). La operación se encarga de concluir el

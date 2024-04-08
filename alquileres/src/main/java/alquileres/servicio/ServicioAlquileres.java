@@ -14,12 +14,14 @@ import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import repositorio.RepositorioException;
+import servicio.FactoriaServicios;
 
 @WebService(endpointInterface = "alquileres.servicio.IServicioAlquileres", targetNamespace = "http://um.es/arso")
-public class ServicioAlquileres implements IServicioAlquileres, IServicioEstaciones {
+public class ServicioAlquileres implements IServicioAlquileres {
 
 	private Repositorio<Usuario, String> repositorio = FactoriaRepositorios.getRepositorio(Usuario.class);
-	private IServicioEstaciones servicioEstaciones = this;
+	private IServicioEstaciones servicioEstaciones = FactoriaServicios.getServicio(IServicioEstaciones.class);
+
 
 	@Override
 	public void reservar(String idUsuario, String idBicicleta) throws RepositorioException, EntidadNoEncontrada {
@@ -68,7 +70,7 @@ public class ServicioAlquileres implements IServicioAlquileres, IServicioEstacio
 	}
 
 	@Override
-	public String historialUsuario(String idUsuario) throws RepositorioException, EntidadNoEncontrada {
+	public Usuario historialUsuario(String idUsuario) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
 
 		String historial = "HISTORIAL DEL USUARIO: " + idUsuario;
@@ -81,18 +83,19 @@ public class ServicioAlquileres implements IServicioAlquileres, IServicioEstacio
 			historial += "\n\t Tiempo de uso hoy: " + usuario.tiempoUsoHoy();
 			historial += "\n\t Tiempo de uso semanal: " + usuario.tiempoUsoSemana();
 		}
-		return historial;
+		System.out.println(historial);
+		return usuario;
 	}
 
 	@Override
 	public void dejarBicicleta(String idUsuario, String idEstacion) throws RepositorioException, EntidadNoEncontrada {
 		Usuario usuario = repositorio.getById(idUsuario);
 
-		if (usuario.alquiler() == null || !servicioEstaciones.hayHuecoDisponible())
+		if (usuario.alquiler() == null || !servicioEstaciones.hayHuecoDisponible(idEstacion))
 			throw new IllegalArgumentException("No se puede dejar la bicicleta.");
 		else {
 			usuario.alquiler().setFin(LocalDateTime.now());
-			servicioEstaciones.dejarBicicleta();
+			servicioEstaciones.dejarBicicleta(idUsuario, idEstacion);
 			repositorio.update(usuario);
 			System.out.println("Bicicleta dejada en la estación.");
 		}

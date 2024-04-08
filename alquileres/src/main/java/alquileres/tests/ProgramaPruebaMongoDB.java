@@ -10,7 +10,7 @@ public class ProgramaPruebaMongoDB {
 
 
 		RepositorioUsuariosMongoDB repositorio = new RepositorioUsuariosMongoDB();
-//		IServicioAlquileres servicio = FactoriaServicios.getServicio(IServicioAlquileres.class);
+		IServicioAlquileres servicio = FactoriaServicios.getServicio(IServicioAlquileres.class);
 
 
 		try {
@@ -19,10 +19,12 @@ public class ProgramaPruebaMongoDB {
 			String id = repositorio.add(user1); // Agregar usuario al repositorio y obtener el ID
 			user1.setId(id); // Asignar el ID al usuario
 			
-//			servicio.alquilar(id, "bici1");
-//			servicio.dejarBicicleta(id, "Estacion1");
-//
-//			servicio.reservar(id, "bici2");
+			servicio.alquilar(id, "bici1");
+			servicio.dejarBicicleta(id, "Estacion1");
+
+			servicio.reservar(id, "bici2");
+			
+			//servicio.alquilar("pruebaUsuario123", "bici 123123");
 			
 
 			// Obtener el usuario del repositorio usando el ID

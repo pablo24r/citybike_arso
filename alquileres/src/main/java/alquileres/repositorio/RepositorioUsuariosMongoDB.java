@@ -26,6 +26,7 @@ public class RepositorioUsuariosMongoDB extends RepositorioMongoDB<Usuario> {
             System.out.println("Error al insertar el usuario en la base de datos: " + e.getMessage());
         }
     }
+    
 
 
 

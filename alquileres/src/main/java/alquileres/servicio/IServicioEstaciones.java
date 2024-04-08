@@ -2,11 +2,7 @@ package alquileres.servicio;
 
 public interface IServicioEstaciones {
 
-	default boolean hayHuecoDisponible() {
-		return true;
-	}
+	public boolean hayHuecoDisponible(String idEstacion);
 	
-	default boolean dejarBicicleta() {
-		return true;
-	}
+	public boolean dejarBicicleta(String idUsuario, String idEstacion);
 }
