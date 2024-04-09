@@ -9,18 +9,20 @@ import javax.jws.WebService;
 import alquileres.modelo.Alquiler;
 import alquileres.modelo.Reserva;
 import alquileres.modelo.Usuario;
-
+import alquileres.repositorio.RepositorioEstaciones;
 import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
 import repositorio.Repositorio;
 import repositorio.RepositorioException;
-import servicio.FactoriaServicios;
 
 @WebService(endpointInterface = "alquileres.servicio.IServicioAlquileres", targetNamespace = "http://um.es/arso")
 public class ServicioAlquileres implements IServicioAlquileres {
 
 	private Repositorio<Usuario, String> repositorio = FactoriaRepositorios.getRepositorio(Usuario.class);
-	private IServicioEstaciones servicioEstaciones = FactoriaServicios.getServicio(IServicioEstaciones.class);
+	private RepositorioEstaciones repoEstaciones;
+
+	private IServicioEstaciones servicioEstaciones = new ServicioEstaciones(repoEstaciones);
+	
 
 
 	@Override
