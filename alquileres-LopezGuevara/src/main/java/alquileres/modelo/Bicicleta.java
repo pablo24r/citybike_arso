@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 
 import repositorio.Identificable;
-
+ 
 public class Bicicleta implements Identificable {
 	@Id
 	private String id;
