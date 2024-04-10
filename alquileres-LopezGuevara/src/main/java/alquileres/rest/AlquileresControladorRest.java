@@ -1,7 +1,5 @@
 package alquileres.rest;
 
-import java.util.List;
-
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -18,8 +16,6 @@ import javax.ws.rs.core.UriInfo;
 
 import com.google.gson.Gson;
 
-import alquileres.modelo.Bicicleta;
-import alquileres.modelo.Estacion;
 import alquileres.modelo.Usuario;
 import alquileres.servicio.*;
 import io.jsonwebtoken.Claims;
@@ -31,7 +27,6 @@ import servicio.FactoriaServicios;
 public class AlquileresControladorRest {
 
 	private IServicioAlquileres servicioAlq = FactoriaServicios.getServicio(IServicioAlquileres.class);
-	private IServicioEstaciones servicioEst = FactoriaServicios.getServicio(IServicioEstaciones.class);
 
 	@Context
 	private HttpServletRequest servletRequest;
@@ -52,7 +47,8 @@ public class AlquileresControladorRest {
 	public Response getHistorialUsuario(@PathParam("idUsuario") String idUsuario) {
 		try {
 			Usuario usuario = servicioAlq.historialUsuario(idUsuario);
-			return Response.status(Response.Status.OK).entity(usuario.toString()).build();
+			String json = new Gson().toJson(usuario);
+			return Response.status(Response.Status.OK).entity(json).build();
 		} catch (RepositorioException | EntidadNoEncontrada e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
@@ -142,112 +138,6 @@ public class AlquileresControladorRest {
 		try {
 			servicioAlq.dejarBicicleta(idUsuario, idEstacion);
 			return Response.status(Response.Status.OK).entity("Se ha estacionado la bicicleta").build();
-		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-		}
-	}
-
-	@POST
-	@Path("/estaciones/{idEstacion}")
-	@RolesAllowed("gestor")
-	public Response altaEstacion(@PathParam("nombre") String nombre, @PathParam("numPuestos") int numPuestos,
-			@PathParam("dirPostal") String dirPostal, @PathParam("coordenadas") String coordenadas) {
-		try {
-			servicioEst.darAltaEstacion(nombre, numPuestos, dirPostal, coordenadas);
-			return Response.status(Response.Status.CREATED).entity("Se ha dado de alta la estación").build();
-		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-		}
-	}
-
-	@POST
-	@Path("/bicicletas")
-	@RolesAllowed("gestor")
-	public Response altaBici(@PathParam("modelo") String modelo, @PathParam("idEstacion") String idEstacion) {
-		try {
-			servicioEst.darAltaBicicleta(modelo, idEstacion);
-			return Response.status(Response.Status.CREATED).entity("Se ha dado de alta la bicicleta").build();
-		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-		}
-	}
-
-	@PUT
-	@Path("/bicicletas/{idBicicleta}")
-	@RolesAllowed("gestor")
-	public Response bajaBicicleta(@PathParam("idBici") String idBici, @PathParam("motivo") String motivo) {
-		try {
-			servicioEst.darBajaBicicleta(idBici, motivo);
-			return Response.status(Response.Status.OK).entity("Se ha dado de baja la bicicleta").build();
-		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-		}
-	}
-
-	@GET
-	@Path("/estaciones/{idEstacion}/bicicletas")
-	@RolesAllowed("gestor")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getListadoBicicletas(@PathParam("idEstacion") String idEstacion) {
-		try {
-			List<Bicicleta> listado = servicioEst.getListadoBicicletas(idEstacion);
-			String json = new Gson().toJson(listado);
-			return Response.status(Response.Status.OK).entity(json).build();
-		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-		}
-	}
-
-	@GET
-	@Path("/estaciones/")
-	@RolesAllowed("usuario")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getListadoEstaciones() {
-		try {
-			List<Estacion> listado = servicioEst.getListadoEstaciones();
-			String json = new Gson().toJson(listado);
-			return Response.status(Response.Status.OK).entity(json).build();
-		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-		}
-	}
-
-	@GET
-	@Path("/estaciones/{idEstacion}")
-	@RolesAllowed("usuario")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getInfoEstacion(@PathParam("idEstacion") String idEstacion) {
-		try {
-			String info = servicioEst.getInfoEstacion(idEstacion);
-			String json = new Gson().toJson(info);
-			return Response.status(Response.Status.OK).entity(json).build();
-		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-		}
-	}
-
-	@GET
-	@Path("/estaciones/{idEstacion}/bicicletas")
-	@RolesAllowed("usuario")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getBicisDisponibles(@PathParam("idEstacion") String idEstacion) {
-		try {
-			List<Bicicleta> disponibles = servicioEst.getBicisDisponibles(idEstacion);
-			String json = new Gson().toJson(disponibles);
-			return Response.status(Response.Status.OK).entity(json).build();
-		} catch (Exception e) {
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
-		}
-	}
-
-	@PUT
-	@Path("/estaciones/{idEstacion}/bicicletas/{idbici}")
-	@RolesAllowed("usuario")
-	public Response estacionarBicicleta(@PathParam("idEstacion") String idEstacion,
-			@PathParam("idBici") String idBici) {
-		try {
-			servicioEst.estacionarBicicleta(idEstacion, idBici);
-			return Response.status(Response.Status.OK).entity("Bicicleta estacionada").build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
