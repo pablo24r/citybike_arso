@@ -9,6 +9,7 @@ import javax.jws.WebService;
 import alquileres.modelo.Alquiler;
 import alquileres.modelo.Reserva;
 import alquileres.modelo.Usuario;
+import alquileres.repositorio.RepositorioBicicletas;
 import alquileres.repositorio.RepositorioEstaciones;
 import repositorio.EntidadNoEncontrada;
 import repositorio.FactoriaRepositorios;
@@ -20,8 +21,9 @@ public class ServicioAlquileres implements IServicioAlquileres {
 
 	private Repositorio<Usuario, String> repositorio = FactoriaRepositorios.getRepositorio(Usuario.class);
 	private RepositorioEstaciones repoEstaciones;
+	private RepositorioBicicletas repoBicis;
 
-	private IServicioEstaciones servicioEstaciones = new ServicioEstaciones(repoEstaciones);
+	private IServicioEstaciones servicioEstaciones = new ServicioEstaciones(repoEstaciones, repoBicis);
 	
 
 

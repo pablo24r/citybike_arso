@@ -10,17 +10,20 @@ import org.springframework.stereotype.Service;
 
 import alquileres.modelo.Bicicleta;
 import alquileres.modelo.Estacion;
+import alquileres.repositorio.RepositorioBicicletas;
 import alquileres.repositorio.RepositorioEstaciones;
 import repositorio.EntidadNoEncontrada;
 
 @Service
 public class ServicioEstaciones implements IServicioEstaciones{
 	
-	private RepositorioEstaciones repositorio;
+	private RepositorioEstaciones repoEstaciones;
+	private RepositorioBicicletas repoBicis;
 	
 	@Autowired
-	public ServicioEstaciones(RepositorioEstaciones repositorio) {
-		this.repositorio=repositorio;
+	public ServicioEstaciones(RepositorioEstaciones repoEstaciones, RepositorioBicicletas repoBicis) {
+		this.repoEstaciones=repoEstaciones;
+		this.repoBicis=repoBicis;
 	}
 	
 	public boolean hayHuecoDisponible(String idEstacion) {
@@ -37,7 +40,7 @@ public class ServicioEstaciones implements IServicioEstaciones{
 	public String darAltaEstacion(String nombre, int numPuestos, String dirPostal, String coordenadas) {
 		Estacion estacion = new Estacion(nombre, numPuestos, dirPostal, coordenadas);
 		estacion.setFechaAlta(LocalDateTime.now());
-		String id = repositorio.save(estacion).getId();
+		String id = repoEstaciones.save(estacion).getId();
 		return id;
 	}
 
@@ -46,15 +49,16 @@ public class ServicioEstaciones implements IServicioEstaciones{
 	@Override
 	public String darAltaBicicleta(String modelo, String idEstacion) {
 		
-		Estacion estacion = repositorio.findById(idEstacion).get();
+		Estacion estacion = repoEstaciones.findById(idEstacion).get();
 		if(estacion.getListadoBicicletas().size()<estacion.getNumPuestos()) {
 			Bicicleta bici = new Bicicleta(modelo);
 			bici.setFechaAlta(LocalDateTime.now());
 			estacion.getListadoBicicletas().add(bici);
 			bici.setDisponible(true);
-			repositorio.save(estacion).getId();
-			// falta establecer id de la bici al añadir 
-			return null;
+			bici.setIdEstacion(idEstacion);
+			bici.setId(repoBicis.save(bici).getId());
+			repoEstaciones.save(estacion).getId(); 
+			return bici.getId();
 		}
 		else
 			return null;
@@ -65,7 +69,13 @@ public class ServicioEstaciones implements IServicioEstaciones{
 
 	@Override
 	public void darBajaBicicleta(String idBici, String motivo) {
-		
+		Bicicleta bici = repoBicis.findById(idBici).get();
+		Estacion estacion = repoEstaciones.findById(bici.getIdEstacion()).get();
+		bici.setFechaBaja(LocalDateTime.now());
+		bici.setDisponible(false);
+		estacion.getListadoBicicletas().remove(bici);
+		repoBicis.save(bici);
+		repoEstaciones.save(estacion);
 		
 	}
 
@@ -73,7 +83,7 @@ public class ServicioEstaciones implements IServicioEstaciones{
 
 	@Override
 	public List<Bicicleta> getListadoBicicletas(String idEstacion) {
-		Estacion estacion = repositorio.findById(idEstacion).get();
+		Estacion estacion = repoEstaciones.findById(idEstacion).get();
 		return estacion.getListadoBicicletas();
 	}
 
@@ -82,7 +92,7 @@ public class ServicioEstaciones implements IServicioEstaciones{
 	@Override
 	public List<Estacion> getListadoEstaciones() {
 		List<Estacion> estaciones = new LinkedList<Estacion>();
-		for (Estacion e: repositorio.findAll()) {
+		for (Estacion e: repoEstaciones.findAll()) {
 			estaciones.add(e);
 		}
 		return estaciones;
@@ -92,7 +102,7 @@ public class ServicioEstaciones implements IServicioEstaciones{
 
 	@Override
 	public String getInfoEstacion(String idEstacion) {
-		Estacion estacion = repositorio.findById(idEstacion).get();
+		Estacion estacion = repoEstaciones.findById(idEstacion).get();
 		String info = "Nombre: " + estacion.getNombre() + "\n";
 		info += "Dirección postal: " + estacion.getDireccionPostal() + "\n";
 		info += "Coordenadas: " + estacion.getCoordenadas() + "\n";
@@ -104,7 +114,7 @@ public class ServicioEstaciones implements IServicioEstaciones{
 
 	@Override
 	public List<Bicicleta> getBicisDisponibles(String idEstacion) {
-		Estacion estacion = repositorio.findById(idEstacion).get();
+		Estacion estacion = repoEstaciones.findById(idEstacion).get();
 		List<Bicicleta> bicis = new LinkedList<Bicicleta>();
 		for (Bicicleta b: estacion.getListadoBicicletas()){
 			if(b.isDisponible())
@@ -116,21 +126,23 @@ public class ServicioEstaciones implements IServicioEstaciones{
 
 
 	@Override
-	public void estacionarBicicleta(String idEstacion, String idBicicleta) {
-		Estacion estacion = repositorio.findById(idEstacion).get();
+	public void estacionarBicicleta(String idEstacion, String idBici) {
+		Estacion estacion = repoEstaciones.findById(idEstacion).get();
+		Bicicleta bici = repoBicis.findById(idBici).get();
 		if(estacion.getListadoBicicletas().size()<estacion.getNumPuestos()) {
-			//falta esto tambien
+			estacion.getListadoBicicletas().add(bici);
+			bici.setIdEstacion(idEstacion);
+			repoBicis.save(bici);
+			repoEstaciones.save(estacion);
 		}
 	}
 
 	@Override
 	public Estacion getEstacion(String idEstacion) throws EntidadNoEncontrada {
-
-
 			if (idEstacion == null || idEstacion.isEmpty())
 				throw new IllegalArgumentException("id: no debe ser nulo ni vacio");
 
-			Optional<Estacion> estacion= repositorio.findById(idEstacion);
+			Optional<Estacion> estacion= repoEstaciones.findById(idEstacion);
 			
 			if(! estacion.isPresent())
 				throw new EntidadNoEncontrada("No existe la encuesta:" + idEstacion);

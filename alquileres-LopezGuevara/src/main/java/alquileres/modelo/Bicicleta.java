@@ -3,9 +3,11 @@ package alquileres.modelo;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import repositorio.Identificable;
- 
+
+@Document(collection = "bicicletas")
 public class Bicicleta implements Identificable {
 	@Id
 	private String id;
@@ -13,6 +15,7 @@ public class Bicicleta implements Identificable {
 	private LocalDateTime fechaAlta;
 	private LocalDateTime fechaBaja;
 	private boolean disponible;
+	private String idEstacion;
 	
 	
 	
@@ -55,6 +58,16 @@ public class Bicicleta implements Identificable {
 
 	public void setFechaBaja(LocalDateTime fechaBaja) {
 		this.fechaBaja = fechaBaja;
+	}
+
+
+	public String getIdEstacion() {
+		return idEstacion;
+	}
+
+
+	public void setIdEstacion(String idEstacion) {
+		this.idEstacion = idEstacion;
 	}
 	
 	
