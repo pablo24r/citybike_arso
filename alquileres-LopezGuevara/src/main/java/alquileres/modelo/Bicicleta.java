@@ -69,6 +69,13 @@ public class Bicicleta implements Identificable {
 	public void setIdEstacion(String idEstacion) {
 		this.idEstacion = idEstacion;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Bicicleta [id:" + id + ", modelo:" + modelo + ", fechaAlta:" + fechaAlta + ", fechaBaja:" + fechaBaja
+				+ ", disponible:" + disponible + ", idEstacion:" + idEstacion + "]";
+	}
 	
 	
 }

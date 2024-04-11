@@ -19,9 +19,7 @@ public class Estacion implements Identificable {
 	private String coordenadas;
 	private LocalDateTime fechaAlta;
 	private List<Bicicleta> listadoBicicletas;
-	
-	
-	
+
 	public Estacion(String nombre, int numPuestos, String direccionPostal, String coordenadas) {
 		super();
 		this.nombre = nombre;
@@ -31,90 +29,67 @@ public class Estacion implements Identificable {
 		this.listadoBicicletas = new LinkedList<Bicicleta>();
 	}
 
-
-
 	public String getId() {
 		return id;
 	}
-
-
 
 	public void setId(String id) {
 		this.id = id;
 	}
 
-
-
 	public String getNombre() {
 		return nombre;
 	}
-
-
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-
-
 	public int getNumPuestos() {
 		return numPuestos;
 	}
-
-
 
 	public void setNumPuestos(int numPuestos) {
 		this.numPuestos = numPuestos;
 	}
 
-
-
 	public String getDireccionPostal() {
 		return direccionPostal;
 	}
-
-
 
 	public void setDireccionPostal(String direccionPostal) {
 		this.direccionPostal = direccionPostal;
 	}
 
-
-
 	public String getCoordenadas() {
 		return coordenadas;
 	}
-
-
 
 	public void setCoordenadas(String coordenadas) {
 		this.coordenadas = coordenadas;
 	}
 
-
-
 	public LocalDateTime getFechaAlta() {
 		return fechaAlta;
 	}
-
-
 
 	public void setFechaAlta(LocalDateTime fechaAlta) {
 		this.fechaAlta = fechaAlta;
 	}
 
-
-
 	public List<Bicicleta> getListadoBicicletas() {
 		return listadoBicicletas;
 	}
-
-
 
 	public void setListadoBicicletas(List<Bicicleta> listadoBicicletas) {
 		this.listadoBicicletas = listadoBicicletas;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Estacion [id:" + id + ", nombre:" + nombre + ", numPuestos:" + numPuestos + ", direccionPostal:"
+				+ direccionPostal + ", coordenadas:" + coordenadas + ", fechaAlta:" + fechaAlta + ", listadoBicicletas:"
+				+ listadoBicicletas + "]";
+	}
 
 }

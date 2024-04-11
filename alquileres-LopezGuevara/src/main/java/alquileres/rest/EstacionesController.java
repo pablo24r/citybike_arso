@@ -3,8 +3,6 @@ package alquileres.rest;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,18 +31,14 @@ public class EstacionesController {
 		this.servicio = servicio;
 	}
 
-	/*@GetMapping("/{idEstacion}") // http://localhost:8080/estaciones/6616cafe364b2c64b4a41338
-	public Estacion getEstacionById(@PathVariable String idEstacion) throws Exception {
-		return servicio.getEstacion(idEstacion);
-	}*/
-
-	@PostMapping("/{idEstacion}")
+	@PostMapping("/")
 	@RolesAllowed("gestor")
 	public Response altaEstacion(@PathVariable String nombre, @PathVariable int numPuestos,
 			@PathVariable String dirPostal, @PathVariable String coordenadas) {
 		try {
-			servicio.darAltaEstacion(nombre, numPuestos, dirPostal, coordenadas);
-			return Response.status(Response.Status.CREATED).entity("Se ha dado de alta la estación").build();
+			String idEstacion = servicio.darAltaEstacion(nombre, numPuestos, dirPostal, coordenadas);
+			System.out.println(idEstacion);
+			return Response.status(Response.Status.CREATED).entity("Se ha dado de alta la estación: "+idEstacion).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
 		}
@@ -72,12 +66,13 @@ public class EstacionesController {
 		}
 	}
 
+	@GetMapping("")
 	@RolesAllowed("usuario")
-	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getListadoEstaciones() {
 		try {
+			System.out.println("Listado estaciones");
 			List<Estacion> listado = servicio.getListadoEstaciones();
-			String json = new Gson().toJson(listado);
+			String json = new Gson().toJson(listado.toString());
 			return Response.status(Response.Status.OK).entity(json).build();
 		} catch (Exception e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
@@ -86,7 +81,6 @@ public class EstacionesController {
 
 	@GetMapping("/{idEstacion}")
 	@RolesAllowed("usuario")
-	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getInfoEstacion(@PathVariable String idEstacion) {
 		try {
 			String info = servicio.getInfoEstacion(idEstacion);
@@ -99,26 +93,29 @@ public class EstacionesController {
 
 	@GetMapping("/{idEstacion}/bicicletas")
 	@RolesAllowed("usuario")
-	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getBicisDisponibles(@PathVariable String idEstacion,
 			@RequestParam(name = "type", defaultValue = "ready") String type) {
 		try {
+			System.out.println(type);
 			if ("ready".equals(type)) {
 				List<Bicicleta> disponibles = servicio.getBicisDisponibles(idEstacion);
-				String json = new Gson().toJson(disponibles);
+				System.out.println(disponibles.toString());
+				String json = new Gson().toJson(disponibles.toString());
 				return Response.status(Response.Status.OK).entity(json).build();
 			} else if ("all".equals(type)) {
 				// Aquí puedes tener lógica específica para el tipo "all"
 				List<Bicicleta> listado = servicio.getListadoBicicletas(idEstacion);
-				String json = new Gson().toJson(listado);
+				String json = new Gson().toJson(listado.toString());
 				return Response.status(Response.Status.OK).entity(json).build();
 			} else {
 				return Response.status(Response.Status.BAD_REQUEST).entity("Parámetro incorrecto").build();
 			}
 		} catch (Exception e) {
+			System.out.println("Ha fallado");
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("ha fallado chatgpt").build();
 		}
 	}
+	
 
 	@PutMapping("/{idEstacion}/bicicletas/{idbici}")
 	@RolesAllowed("usuario")
@@ -131,4 +128,15 @@ public class EstacionesController {
 		}
 	}
 
+	@GetMapping("/borrar")
+	@RolesAllowed("usuario")
+	public Response borrarTodo() {
+		try {
+			servicio.limpiar();
+			return Response.status(Response.Status.OK).entity("Repositorio limpiado").build();
+		} catch (Exception e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage()).build();
+		}
+	}
+	
 }
