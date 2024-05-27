@@ -8,15 +8,19 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import estaciones.modelo.Bicicleta;
+import estaciones.modelo.BicicletaDTO;
 import estaciones.modelo.Estacion;
+import estaciones.modelo.EstacionDTO;
 import estaciones.repositorio.RepositorioBicicletas;
 import estaciones.repositorio.RepositorioEstaciones;
+import rabbitmq.PublicadorEventos;
 import repositorio.EntidadNoEncontrada;
 
 @Service
@@ -25,18 +29,18 @@ public class ServicioEstaciones implements IServicioEstaciones{
 	private RepositorioEstaciones repoEstaciones;
 	private RepositorioBicicletas repoBicis;
 	
+
 	@Autowired
 	public ServicioEstaciones(RepositorioEstaciones repoEstaciones, RepositorioBicicletas repoBicis) {
 		this.repoEstaciones=repoEstaciones;
 		this.repoBicis=repoBicis;
 	}
 	
-	public boolean hayHuecoDisponible(String idEstacion) {
-		return true;
-	}
+    @Autowired
+    private PublicadorEventos publicadorEventos;
 	
-	public boolean dejarBicicleta(String idUsuario, String idEstacion) {
-		return true;
+	public boolean hayHuecoDisponible(String idEstacion) {
+		return repoEstaciones.findById(idEstacion).get().getNumPuestos() > 0;
 	}
 
 
@@ -101,23 +105,42 @@ public class ServicioEstaciones implements IServicioEstaciones{
 
 	    // Guardar la estación actualizada
 	    repoEstaciones.save(estacion);
+	    
+	    publicadorEventos.emitirEvento("citybike.estaciones.bicicleta-desactivada", bici.getId());
+	}
+
+
+	public Page<Bicicleta> getListadoBicicletas(String idEstacion, Pageable pageable) {
+	    Estacion estacion = repoEstaciones.findById(idEstacion).orElse(null);
+	    if (estacion == null) {
+	        // Manejo de la estación no encontrada
+	        return null;
+	    }
+	    return new PageImpl<>(estacion.getListadoBicicletas(), pageable, estacion.getListadoBicicletas().size());
+	}
+	
+	@Override
+	public Page<BicicletaDTO> getListadoBicicletasDTO(String idEstacion, Pageable pageable) {
+	    Estacion estacion = repoEstaciones.findById(idEstacion).orElse(null);
+	    if (estacion == null) {
+	        // Manejo de la estación no encontrada
+	        return null;
+	    }
+	    Page<Bicicleta> bicicletasPage = this.getListadoBicicletas(idEstacion, pageable);
+	    return bicicletasPage.map(Bicicleta::toDTO);
 	}
 
 
 
-
-	@Override
-	public List<Bicicleta> getListadoBicicletas(String idEstacion) {
-		Estacion estacion = repoEstaciones.findById(idEstacion).get();
-		return estacion.getListadoBicicletas();
-	}
-
-
-
-	@Override
 	public Page<Estacion> getListadoEstaciones(Pageable pageable) {
-		return repoEstaciones.findAll(pageable);
+		return this.repoEstaciones.findAll(pageable);
 	}
+	
+    @Override
+    public Page<EstacionDTO> getListadoEstacionesDTO(Pageable pageable) {
+        Page<Estacion> estacionesPage = this.getListadoEstaciones(pageable);
+        return estacionesPage.map(Estacion::toDTO);
+    }
 
 
 
@@ -148,30 +171,35 @@ public class ServicioEstaciones implements IServicioEstaciones{
 
 
 	@Override
-	public List<Bicicleta> getBicisDisponibles(String idEstacion) {
+	public Page<BicicletaDTO> getBicisDisponibles(String idEstacion, Pageable pageable) {
 		Estacion estacion = repoEstaciones.findById(idEstacion).get();
 		List<Bicicleta> bicis = new LinkedList<Bicicleta>();
 		for (Bicicleta b: estacion.getListadoBicicletas()){
 			if(b.isDisponible())
 				bicis.add(b);
 		}
-		return bicis;
+		Page<Bicicleta> listado = new PageImpl<>(bicis, pageable, bicis.size());
+		return listado.map(Bicicleta::toDTO);
 	}
-
 
 
 	@Override
 	public void estacionarBicicleta(String idEstacion, String idBici) {
-		Estacion estacion = repoEstaciones.findById(idEstacion).get();
+		
 		Bicicleta bici = repoBicis.findById(idBici).get();
-		if(estacion.getListadoBicicletas().size()<estacion.getNumPuestos()) {
-			estacion.getListadoBicicletas().add(bici);
+		Estacion estacionNueva = repoEstaciones.findById(idEstacion).get();
+		Estacion estacionAntigua =repoEstaciones.findById(bici.getIdEstacion()).get(); 
+		if(estacionNueva.getListadoBicicletas().size()<estacionNueva.getNumPuestos()) {
+			estacionAntigua.getListadoBicicletas().removeIf(b -> b.getId().equals(bici.getId()));
+			estacionNueva.getListadoBicicletas().add(bici);
 			bici.setIdEstacion(idEstacion);
 			bici.setFechaBaja(null);
 			bici.setDisponible(true);
 			repoBicis.save(bici);
-			estacion.setNumPuestos(estacion.getNumPuestos()-1);
-			repoEstaciones.save(estacion);
+			estacionNueva.setNumPuestos(estacionNueva.getNumPuestos()-1);
+			estacionAntigua.setNumPuestos(estacionAntigua.getNumPuestos()+1);
+			repoEstaciones.save(estacionNueva);
+			repoEstaciones.save(estacionAntigua);
 		}
 	}
 
@@ -186,6 +214,14 @@ public class ServicioEstaciones implements IServicioEstaciones{
 				throw new EntidadNoEncontrada("No existe la estación:" + idEstacion);
 			else
 				return estacion.get();
+	}
+	
+	public RepositorioEstaciones getRepoEstaciones() {
+		return repoEstaciones;
+	}
+
+	public RepositorioBicicletas getRepoBicis() {
+		return repoBicis;
 	}
 
 }

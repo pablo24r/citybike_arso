@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import repositorio.Identificable;
 
 @Document(collection = "bicicletas")
@@ -12,7 +14,9 @@ public class Bicicleta implements Identificable {
 	@Id
 	private String id;
 	private String modelo;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime fechaAlta;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private LocalDateTime fechaBaja;
 	private boolean disponible;
 	private String idEstacion;
@@ -22,6 +26,9 @@ public class Bicicleta implements Identificable {
 	public Bicicleta(String modelo) {
 		super();
 		this.modelo = modelo;
+	}
+	
+	public Bicicleta() {
 	}
 	
 	
@@ -70,5 +77,8 @@ public class Bicicleta implements Identificable {
 		this.idEstacion = idEstacion;
 	}
 	
+	public static BicicletaDTO toDTO (Bicicleta bici) {
+		return new BicicletaDTO(bici.getId(), bici.getModelo(), bici.isDisponible(), bici.getIdEstacion());
+	}
 	
 }

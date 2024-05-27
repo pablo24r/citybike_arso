@@ -7,8 +7,6 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import repositorio.Identificable;
 
 @Document(collection = "estaciones")
@@ -16,15 +14,10 @@ public class Estacion implements Identificable {
 	@Id
 	private String id;
 	private String nombre;
-	@JsonIgnore
 	private int numPuestos;
-	@JsonIgnore
 	private String direccionPostal;
-	@JsonIgnore
 	private String coordenadas;
-	@JsonIgnore
 	private LocalDateTime fechaAlta;
-	@JsonIgnore
 	private List<Bicicleta> listadoBicicletas;
 	
 	
@@ -120,6 +113,10 @@ public class Estacion implements Identificable {
 
 	public void setListadoBicicletas(List<Bicicleta> listadoBicicletas) {
 		this.listadoBicicletas = listadoBicicletas;
+	}
+	
+	public static EstacionDTO toDTO (Estacion e) {
+		return new EstacionDTO(e.getId(), e.getNombre(), e.getNumPuestos(), e.getDireccionPostal(), e.getCoordenadas());
 	}
 
 	
