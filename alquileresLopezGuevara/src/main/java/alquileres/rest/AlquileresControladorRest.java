@@ -17,12 +17,12 @@ import javax.ws.rs.core.UriInfo;
 
 import alquileres.modelo.Usuario;
 import alquileres.servicio.IServicioAlquileres;
+import alquileres.servicio.ServicioAlquileresException;
 import io.jsonwebtoken.Claims;
 import repositorio.AlquilerActivoException;
 import repositorio.EntidadNoEncontrada;
 import repositorio.RepositorioException;
 import repositorio.ReservaActivaException;
-import repositorio.SinReservaActivaException;
 import repositorio.SuperaTiempoException;
 import repositorio.UsuarioBloqueadoException;
 import servicio.FactoriaServicios;
@@ -37,7 +37,7 @@ public class AlquileresControladorRest {
 
 	@Context
 	private UriInfo uriInfo;
-
+	// --add-opens java.base/java.time=ALL-UNNAMED
 	// curl -X GET http://localhost:8080/api/alquileres/prueba/123
 	@GET
 	@Path("/prueba/{id}")
@@ -49,8 +49,7 @@ public class AlquileresControladorRest {
 				.entity("{\"message\": \"Prueba exitosa\", \"userId\": \"" + idUsuario + "\"}").build();
 	}
 
-	// curl -X GET http://localhost:8080/api/alquileres/664cb6a9367e786845a20439 -H
-	// "Authorization: Bearer <token>"
+	// curl -X GET http://localhost:8080/api/alquileres/66537e4e92ea907f5309d3a9 -H "Authorization: Bearer <token>"
 	@GET
 	@Path("/{id}")
 	@RolesAllowed({ "usuario", "gestor" })
@@ -79,17 +78,23 @@ public class AlquileresControladorRest {
 
 	}
 
-	// curl -X PUT http://localhost:8080/api/alquileres/664cb6a9367e786845a20439/alquilar/bici123 -H "Authorization: Bearer <token>"
+	// curl -X PUT
+	// http://localhost:8080/api/alquileres/66537e4f92ea907f5309d3ac/alquilar/bici123
+	// -H "Authorization: Bearer <token>"
 	@PUT
 	@Path("/{id}/alquilar/{idBici}")
-	@RolesAllowed({ "usuario", "gestor" })
+	//@RolesAllowed({ "usuario", "gestor" })
+	@PermitAll
 	public Response alquilar(@PathParam("id") String idUsuario, @PathParam("idBici") String idBici)
-			throws ReservaActivaException, AlquilerActivoException, UsuarioBloqueadoException, SuperaTiempoException, RepositorioException, EntidadNoEncontrada {
-			servicio.alquilar(idUsuario, idBici);
-			return Response.status(Response.Status.CREATED).entity("Bicibleta alquilada").build();
+			throws ReservaActivaException, AlquilerActivoException, UsuarioBloqueadoException, SuperaTiempoException,
+			RepositorioException, EntidadNoEncontrada {
+		servicio.alquilar(idUsuario, idBici);
+		return Response.status(Response.Status.CREATED).entity("Bicibleta alquilada").build();
 	}
 
-	// curl -X POST http://localhost:8080/api/alquileres/664cb6a9367e786845a20439/reservar/bici123 -H "Authorization: Bearer <token>"
+	// curl -X POST
+	// http://localhost:8080/api/alquileres/664cb6a9367e786845a20439/reservar/bici123
+	// -H "Authorization: Bearer <token>"
 	@POST
 	@Path("/{id}/reservar/{idBici}")
 	@RolesAllowed({ "usuario", "gestor" })
@@ -101,34 +106,27 @@ public class AlquileresControladorRest {
 
 	}
 
-	// curl -X POST http://localhost:8080/api/alquileres/664cb6a9367e786845a20439 -H "Authorization: Bearer <token>"
+	// curl -X POST http://localhost:8080/api/alquileres/664cb6a9367e786845a20439 -H
+	// "Authorization: Bearer <token>"
 	@POST
 	@Path("/{id}")
 	@RolesAllowed({ "usuario", "gestor" })
 	public Response confirmarReserva(@PathParam("id") String idUsuario)
-			throws SinReservaActivaException, RepositorioException, EntidadNoEncontrada {
+			throws Exception {
 		servicio.confirmarReserva(idUsuario);
 		return Response.status(Response.Status.CREATED).entity("Se ha confirmado una reserva").build();
 	}
 
-	/*
-	 * // curl -X POST --data
-	 * http://localhost:8080/api/alquileres/664cb6a9367e786845a20439/estaciones/
-	 * estacion1 -H "Authorization: Bearer <token>"
-	 * 
-	 * @POST
-	 * 
-	 * @Path("/{id}/estaciones/{isEstacion}")
-	 * 
-	 * @Produces({ MediaType.APPLICATION_JSON })
-	 * 
-	 * @RolesAllowed("usuario") public Response
-	 * estacionarBicicleta(@PathParam("idUsuario") String
-	 * idUsuario, @PathParam("idEstacion") String idEstacion) { try {
-	 * servicio.dejarBicicleta(idUsuario, idEstacion); return
-	 * Response.status(Response.Status.OK).entity("Se ha estacionado la bicicleta").
-	 * build(); } catch (Exception e) { return
-	 * Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(e.getMessage())
-	 * .build(); } }
-	 */
+	// curl -X POST --data http://localhost:8080/api/alquileres/664cb6a9367e786845a20439/estacionar/estacion1 -H "Authorization: Bearer <token>"
+	@POST
+	@Path("/{idUsuario}/estacionar/{idEstacion}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	//@RolesAllowed({ "usuario", "gestor" })
+	@PermitAll
+	public Response estacionarBicicleta(@PathParam("idUsuario") String idUsuario,
+			@PathParam("idEstacion") String idEstacion) throws RepositorioException, EntidadNoEncontrada, ServicioAlquileresException{
+			servicio.dejarBicicleta(idUsuario, idEstacion);
+			return Response.status(Response.Status.OK).entity("Se ha estacionado la bicicleta").build();
+	}
+
 }

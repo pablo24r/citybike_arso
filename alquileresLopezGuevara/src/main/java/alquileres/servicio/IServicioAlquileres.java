@@ -35,8 +35,9 @@ public interface IServicioAlquileres {
 	 * propiedad fin. Por último, esta operación elimina la reserva. Requisitos:
 	 * 
 	 * El usuario tiene una reservaActiva.
+	 * @throws Exception 
 	 */
-	void confirmarReserva(String idUsuario) throws RepositorioException, EntidadNoEncontrada, SinReservaActivaException;
+	void confirmarReserva(String idUsuario) throws RepositorioException, EntidadNoEncontrada, SinReservaActivaException, Exception;
 
 	/**
 	 * alquilar(idUsuario, idBicicleta). Crea el alquiler, sin reserva previa, de
@@ -46,6 +47,7 @@ public interface IServicioAlquileres {
 	 * 
 	 * El usuario no tiene una reservaActiva. El usuario no tiene un alquilerActivo.
 	 * No está permitido el alquiler si el usuario está bloqueado o superaTiempo.
+	 * @throws Exception 
 	 */
 	void alquilar(String idUsuario, String idBicicleta) throws RepositorioException, EntidadNoEncontrada,
 			ReservaActivaException, AlquilerActivoException, UsuarioBloqueadoException, SuperaTiempoException;
@@ -77,5 +79,7 @@ public interface IServicioAlquileres {
 	 */
 
 	public List<Alquiler> recuperarAlquileres(String idUsuario) throws RepositorioException, EntidadNoEncontrada;
+	
+	public void dejarBicicleta(String idUsuario, String idEstacion) throws RepositorioException, EntidadNoEncontrada, ServicioAlquileresException;
 
 }
