@@ -34,10 +34,6 @@ namespace usuarios.Modelo
         
         }
         
-        
-
-
-
 
     public class ActivationCode
     {

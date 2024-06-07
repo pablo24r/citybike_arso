@@ -22,11 +22,15 @@ namespace usuarios.Servicio
 
         ActivationCode SolicitudCodigoActivacion(string idUsuario);
 
-        void AltaUsuario(string codigo, int alternativa, string nick, string password);
+        Usuario? AltaUsuario(string codigo, string nick, string password);
+
+        Usuario? RecuperarUsuario(string codigo, string nick, string GitHubId);
 
         void BajaUsuario(string idUsuario);
-        
-        public Dictionary<string,string> VerificarCredenciales(string nick, string contraseña);
+
+        Dictionary<string,string> VerificarCredenciales(string nick, string contraseña);
+
+        Dictionary<string,string> VerificarOAuth2(string nick);
     }
 
     public class ServicioUsuarios : IServicioUsuarios
@@ -76,31 +80,45 @@ namespace usuarios.Servicio
 
 
 
-        public void AltaUsuario(string codigo, int alternativa, string nick, string password)
+       public Usuario? AltaUsuario(string codigo, string nick, string password)
+        {
+            var Code = RepoCodigos.GetAll().Find(c => c.Code == codigo);
+            if (Code != null)
+        {
+            var usuario = RepoUsuarios.GetById(Code.UserId);
+            if (usuario != null)
+            {
+                usuario.Activado = true; // Lo doy de alta
+                usuario.Nick = nick;
+                usuario.PasswordHash = HashPassword(password);
+                RepoCodigos.Delete(Code); // Una vez usado, elimino el código del repositorio
+                RepoUsuarios.Update(usuario);
+                return usuario;
+            }
+        }
+        return null;
+}
+
+
+        public Usuario? RecuperarUsuario(string codigo, string nick, string GitHubId)
         {
             var Code = RepoCodigos.GetAll().Find(c => c.Code == codigo);
             if (Code != null)
             {
                 var usuario = RepoUsuarios.GetById(Code.UserId);
-                usuario.Activado = true; // Lo doy de alta
-                switch (alternativa)
+                if (usuario != null)
                 {
-                    case (1): // Usuario/contraseña
-                        usuario.Nick = nick;
-                        usuario.PasswordHash = HashPassword(password);
-                    break;
-                    
-                    case (2): // Oauth Github
-                        usuario.OAuth2Id = nick;
-                    break;
-
-                    default:
-                    break;
+                    usuario.Activado = true; // Lo doy de alta
+                    usuario.Nick = nick;
+                    usuario.OAuth2Id = GitHubId;                
+                    RepoCodigos.Delete(Code); // Una vez usado, elimino el código del repositorio
+                    RepoUsuarios.Update(usuario);
+                    return usuario;
                 }
-            RepoCodigos.Delete(Code); // Una vez usado, elimino el codigo del repositorio
-            RepoUsuarios.Update(usuario);
             }
+            return null;
         }
+
 
         public void BajaUsuario(string idUsuario)
         {
@@ -132,6 +150,27 @@ namespace usuarios.Servicio
             }
             return new Dictionary<string, string>{};
         }
+
+    public Dictionary<string,string> VerificarOAuth2(string nick)
+        {
+            var usuario = RepoUsuarios.GetAll().Find(user => user.OAuth2Id == nick);
+            if( usuario != null)
+            {
+                {
+                    return new Dictionary<string, string>
+                    {
+                        { "Id", usuario.Id },
+                        { "Nombre", usuario.Nombre },
+                        { "Email", usuario.Email },
+                        { "GitHub-Nick", usuario.OAuth2Id },
+                        { "Role", usuario.Role },
+                        { "Activado", usuario.Activado.ToString() }
+                    };
+                }
+            }
+            return new Dictionary<string, string>{};
+        }
+
         public List<UsuariosResumen> GetUsuarios()
         {
 
