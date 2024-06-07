@@ -28,7 +28,8 @@ namespace UsuariosApi
         {
 
             services.AddSingleton<Repositorio<Usuario, String>, RepositorioUsuariosMongoDB>(); 
-
+            services.AddSingleton<Repositorio<ActivationCode, String>, RepositorioCodigosMongoDB>(); 
+            
             services.AddSingleton<IServicioUsuarios,ServicioUsuarios>(); 
 
             services.AddControllers(options =>

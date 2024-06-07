@@ -17,18 +17,26 @@ namespace usuarios.Modelo
         [BsonElement("Email")]
         public string Email { get; set; } = string.Empty;
 
+        [BsonElement("Nick")]
+        public string Nick { get; set; } = string.Empty;
+
         [BsonElement("PasswordHash")]
         public string PasswordHash { get; set; } = string.Empty;
-
-        [BsonElement("OAuth2Provider")]
-        public string OAuth2Provider { get; set; } = string.Empty;
 
         [BsonElement("OAuth2Id")]
         public string OAuth2Id { get; set; } = string.Empty;
 
         [BsonElement("Role")]
-        public string Role { get; set; } = "User";
+        public string Role { get; set; } = "Usuario";
+        
+        [BsonElement("Activado")]
+        public bool Activado { get; set; } = false;
+        
         }
+        
+        
+
+
 
 
     public class ActivationCode
