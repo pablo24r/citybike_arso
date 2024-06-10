@@ -13,24 +13,25 @@ namespace usuarios.Servicio
         public String Id { get; set; } = string.Empty;
         public String Nombre { get; set; } = string.Empty;
         public String Nick { get; set; } = string.Empty;
-        public String Email { get; set; } = string.Empty;
+        public String NickGitHub { get; set; } = string.Empty;
         public String Role { get; set; } = string.Empty;
+        public bool Activado { get; set;}
     }
     public interface IServicioUsuarios
     {
-        List<UsuariosResumen> GetUsuarios();
-
         ActivationCode SolicitudCodigoActivacion(string idUsuario);
 
-        Usuario? AltaUsuario(string codigo, string nick, string password);
+        Usuario? AltaUsuario(string codigo, string nombre, string nick, string password);
 
-        Usuario? RecuperarUsuario(string codigo, string nick, string GitHubId);
+        Usuario? AltaUsuario(string codigo, string nombre, string nickGitHub);
 
         void BajaUsuario(string idUsuario);
 
         Dictionary<string,string> VerificarCredenciales(string nick, string contraseña);
 
         Dictionary<string,string> VerificarOAuth2(string nick);
+
+        List<UsuariosResumen> GetListadoUsuarios();
     }
 
     public class ServicioUsuarios : IServicioUsuarios
@@ -80,10 +81,10 @@ namespace usuarios.Servicio
 
 
 
-       public Usuario? AltaUsuario(string codigo, string nick, string password)
+       public Usuario? AltaUsuario(string codigo, string nombre, string nick, string password)
         {
             var Code = RepoCodigos.GetAll().Find(c => c.Code == codigo);
-            if (Code != null)
+            if (Code != null && Code.Expiration > DateTime.Now)
         {
             var usuario = RepoUsuarios.GetById(Code.UserId);
             if (usuario != null)
@@ -97,10 +98,10 @@ namespace usuarios.Servicio
             }
         }
         return null;
-}
+        }
 
 
-        public Usuario? RecuperarUsuario(string codigo, string nick, string GitHubId)
+        public Usuario? AltaUsuario(string codigo, string nombre, string GitHubId)
         {
             var Code = RepoCodigos.GetAll().Find(c => c.Code == codigo);
             if (Code != null)
@@ -109,7 +110,7 @@ namespace usuarios.Servicio
                 if (usuario != null)
                 {
                     usuario.Activado = true; // Lo doy de alta
-                    usuario.Nick = nick;
+                    usuario.Nombre = nombre;
                     usuario.OAuth2Id = GitHubId;                
                     RepoCodigos.Delete(Code); // Una vez usado, elimino el código del repositorio
                     RepoUsuarios.Update(usuario);
@@ -141,7 +142,7 @@ namespace usuarios.Servicio
                     {
                         { "Id", usuario.Id },
                         { "Nombre", usuario.Nombre },
-                        { "Email", usuario.Email },
+                        { "Nick", usuario.Nick },
                         { "PasswordHash", usuario.PasswordHash },
                         { "Role", usuario.Role },
                         { "Activado", usuario.Activado.ToString() }
@@ -161,7 +162,6 @@ namespace usuarios.Servicio
                     {
                         { "Id", usuario.Id },
                         { "Nombre", usuario.Nombre },
-                        { "Email", usuario.Email },
                         { "GitHub-Nick", usuario.OAuth2Id },
                         { "Role", usuario.Role },
                         { "Activado", usuario.Activado.ToString() }
@@ -171,7 +171,7 @@ namespace usuarios.Servicio
             return new Dictionary<string, string>{};
         }
 
-        public List<UsuariosResumen> GetUsuarios()
+        public List<UsuariosResumen> GetListadoUsuarios()
         {
 
             var resultado = new List<UsuariosResumen>();
@@ -184,8 +184,8 @@ namespace usuarios.Servicio
                     {
                         Id = usuario.Id,
                         Nombre = usuario.Nombre,
-                        Email = usuario.Email,
                         Nick = usuario.Nick,
+                        NickGitHub = usuario.OAuth2Id,
                         Role = usuario.Role
                     };
                     resultado.Add(resumen);

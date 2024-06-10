@@ -14,9 +14,6 @@ namespace usuarios.Modelo
         [BsonElement("Nombre")]
         public string Nombre{ get; set; } = string.Empty;
 
-        [BsonElement("Email")]
-        public string Email { get; set; } = string.Empty;
-
         [BsonElement("Nick")]
         public string Nick { get; set; } = string.Empty;
 

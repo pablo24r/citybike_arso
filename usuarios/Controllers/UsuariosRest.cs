@@ -19,10 +19,10 @@ namespace usuarios.Controllers
 
         [HttpGet]
         public ActionResult<List<UsuariosResumen>> Get() =>
-            _servicio.GetUsuarios();
+            _servicio.GetListadoUsuarios();
 
 
-        [HttpPost("{idUsuario}")]
+        [HttpGet("codigo/{idUsuario}")]
         public ActionResult<ActivationCode> SolicitudCodigoActivacion(string idUsuario)
         {
             var code = _servicio.SolicitudCodigoActivacion(idUsuario);
@@ -30,24 +30,29 @@ namespace usuarios.Controllers
         }
 
         [HttpPost("activar/{codigo}")]
-        public ActionResult<ActivationCode> AltaUsuario(string codigo, [FromForm] string nick, [FromForm] string password)
+        public ActionResult<ActivationCode> AltaUsuario(string codigo, [FromQuery] string nombre, [FromQuery] string nick, [FromQuery] string? password = null)
         {
-            if (_servicio.AltaUsuario(codigo, nick, password) != null)
-                return Ok();
-            else 
-                return NotFound();
-        }
-
-        [HttpPost("recuperar/{codigo}")]
-        public ActionResult<ActivationCode> RecuperarUsuario(string codigo, [FromForm] string nick, [FromForm] string GitHubId)
-        {
-            if( _servicio.RecuperarUsuario(codigo, nick, GitHubId) != null)
-                return Ok();
+            Usuario? usuario;
+            if (!string.IsNullOrEmpty(password))
+            {
+                usuario = _servicio.AltaUsuario(codigo, nombre, nick, password);
+            }
             else
+            {
+                usuario = _servicio.AltaUsuario(codigo, nombre, nick);
+            }
+
+            if (usuario != null)
+            {
+                return Ok(usuario);
+            }
+            else
+            {
                 return NotFound();
+            }
         }
         
-        [HttpPut("{idUsuario}")]
+        [HttpPost("baja/{idUsuario}")]
         public IActionResult BajaUsuario(string idUsuario)
         {
             _servicio.BajaUsuario(idUsuario);
@@ -65,7 +70,7 @@ namespace usuarios.Controllers
             return Ok(claims);
         }
 
-        [HttpPost("OAuth2")]
+        [HttpPost("oauth2")]
         public ActionResult<string> VerificarOauth([FromForm] string nick)
         {
             var claims = _servicio.VerificarOAuth2(nick);
