@@ -53,22 +53,8 @@ namespace usuarios.Controllers
             _servicio.BajaUsuario(idUsuario);
             return Ok();
         }
-        
-        
-    }
-
-    [Route("auth")]
-    [ApiController]
-    public class AuthController : ControllerBase
-    {
-         private readonly IServicioUsuarios _servicio;
-
-        public AuthController(IServicioUsuarios servicio)
-        {
-            _servicio = servicio;
-        }
-
-        [HttpPost("login")]
+     	
+     	[HttpPost("login")]
         public ActionResult<string> VerificarCredenciales([FromForm] string nick, [FromForm] string password)
         {
             var claims = _servicio.VerificarCredenciales(nick, password);
@@ -88,7 +74,8 @@ namespace usuarios.Controllers
                 return Unauthorized();
             }
             return Ok(claims);
-        }
+        }   
+        
     }
 
 }

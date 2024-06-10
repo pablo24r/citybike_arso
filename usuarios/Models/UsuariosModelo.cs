@@ -32,7 +32,7 @@ namespace usuarios.Modelo
         [BsonElement("Activado")]
         public bool Activado { get; set; } = false;
         
-        }
+    }
         
 
     public class ActivationCode
