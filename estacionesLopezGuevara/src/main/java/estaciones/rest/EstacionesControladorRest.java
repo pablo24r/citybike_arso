@@ -123,7 +123,7 @@ public class EstacionesControladorRest {
 
 	// curl -X POST http://localhost:8080/estaciones/662f6c7c8b431333486f662f/nuevaBicicleta?modeloBici=model1999
 	@Operation(summary = "Agregar una nueva bicicleta a una estación", description = "Agrega una nueva bicicleta a una estación específica utilizando el modelo de bicicleta proporcionado")
-	@PostMapping("/{idEstacion}/nuevaBicicleta")
+	@PostMapping("/{idEstacion}/bicicletas")
 	public ResponseEntity<Map<String, String>> nuevaBicicleta(@PathVariable String idEstacion, @RequestParam String modelo) {
 	    String id = servicio.darAltaBicicleta(modelo, idEstacion);
 	    Map<String, String> responseBody = new HashMap<>();
