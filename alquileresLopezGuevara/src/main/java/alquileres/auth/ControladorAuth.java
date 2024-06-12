@@ -17,7 +17,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Path("auth")
 public class ControladorAuth {
 
-	//curl -X POST http://localhost:8080/api/auth/login "username=tu_usuario" -d "password=tu_contraseña"
+	//curl -X POST http://localhost:8080/api/auth/login -d "username=tu_usuario" -d "password=tu_contraseña"
 	@POST
 	@Path("/login")
 	@PermitAll
