@@ -1,0 +1,1938 @@
+{
+	"info": {
+		"_postman_id": "089cdc20-77a3-421c-b88a-2b693f6b2020",
+		"name": "citybike-LopezGuevara",
+		"description": "Colección Postman de pruebas para la aplicacion Citybike (arso2024)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36240426"
+	},
+	"item": [
+		{
+			"name": "AlquileresApi",
+			"item": [
+				{
+					"name": "Prueba",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/alquileres/prueba/123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alquileres",
+								"prueba",
+								"123"
+							],
+							"query": [
+								{
+									"key": "username",
+									"value": "Pablo",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "Contraseña",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "Pablo",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "contraseña123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RecuperarUsuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQYWJsbyIsInJvbGVzIjoidXN1YXJpbyIsImV4cCI6MTcxODEwMDQxOX0.NQTsXVR6JIwewAaqGH4PcwI5xDQgxlSLTZPQODMtfhI"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/alquileres/6654eda397098874e12dd364",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alquileres",
+								"6654eda397098874e12dd364"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LiberarUsuario",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQYWJsbyIsInJvbGVzIjoidXN1YXJpbyIsImV4cCI6MTcxODEwMDQxOX0.NQTsXVR6JIwewAaqGH4PcwI5xDQgxlSLTZPQODMtfhI"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/alquileres/6654eda397098874e12dd364",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alquileres",
+								"6654eda397098874e12dd364"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AlquilarBicicleta",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQYWJsbyIsInJvbGVzIjoidXN1YXJpbyIsImV4cCI6MTcxODEwMDQxOX0.NQTsXVR6JIwewAaqGH4PcwI5xDQgxlSLTZPQODMtfhI"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/alquileres/6654eda397098874e12dd364/alquilar/bici123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alquileres",
+								"6654eda397098874e12dd364",
+								"alquilar",
+								"bici123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ReservarBicicleta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQYWJsbyIsInJvbGVzIjoidXN1YXJpbyIsImV4cCI6MTcxODEwMDQxOX0.NQTsXVR6JIwewAaqGH4PcwI5xDQgxlSLTZPQODMtfhI"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/alquileres/6654ca8f0fa4df6e75ad4c9c/reservar/bici123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alquileres",
+								"6654ca8f0fa4df6e75ad4c9c",
+								"reservar",
+								"bici123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ConfirmarReserva",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQYWJsbyIsInJvbGVzIjoidXN1YXJpbyIsImV4cCI6MTcxODEwMDQxOX0.NQTsXVR6JIwewAaqGH4PcwI5xDQgxlSLTZPQODMtfhI"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/alquileres/6654ca8f0fa4df6e75ad4c9c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alquileres",
+								"6654ca8f0fa4df6e75ad4c9c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EstacionarBicicleta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQYWJsbyIsInJvbGVzIjoidXN1YXJpbyIsImV4cCI6MTcxODEwMDQxOX0.NQTsXVR6JIwewAaqGH4PcwI5xDQgxlSLTZPQODMtfhI"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/alquileres/6654ca8f0fa4df6e75ad4c9c/estacionar/662f6c7c8b431333486f662f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"alquileres",
+								"6654ca8f0fa4df6e75ad4c9c",
+								"estacionar",
+								"662f6c7c8b431333486f662f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "EstacionesApi",
+			"item": [
+				{
+					"name": "RecuperarEstacion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/estaciones/662f6c7c8b431333486f662f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"estaciones",
+								"662f6c7c8b431333486f662f"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/estaciones/662f6c7c8b431333486f662f",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"estaciones",
+										"662f6c7c8b431333486f662f"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 09:43:26 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"662f6c7c8b431333486f662f\",\n    \"nombre\": \"estacion2\",\n    \"numPuestos\": 12,\n    \"direccionPostal\": \"calle estacion\",\n    \"coordenadas\": \"0,0,0,0\"\n}"
+						}
+					]
+				},
+				{
+					"name": "ListadoEstaciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/estaciones",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"estaciones"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/estaciones",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"estaciones"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/hal+json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 09:44:28 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_embedded\": {\n        \"estacionDTOList\": [\n            {\n                \"id\": \"662f6c7c8b431333486f662f\",\n                \"nombre\": \"estacion2\",\n                \"numPuestos\": 12,\n                \"direccionPostal\": \"calle estacion\",\n                \"coordenadas\": \"0,0,0,0\",\n                \"_links\": {\n                    \"bicicletasDisponibles:\": {\n                        \"href\": \"http://localhost:8085/estaciones/662f6c7c8b431333486f662f/bicicletasDisponibles?page=0&size=5\"\n                    }\n                }\n            },\n            {\n                \"id\": \"662f6c8b7a7ea20f9700b871\",\n                \"nombre\": \"estacion2\",\n                \"numPuestos\": 9,\n                \"direccionPostal\": \"calle estacion\",\n                \"coordenadas\": \"0,0,0,0\",\n                \"_links\": {\n                    \"bicicletasDisponibles:\": {\n                        \"href\": \"http://localhost:8085/estaciones/662f6c8b7a7ea20f9700b871/bicicletasDisponibles?page=0&size=5\"\n                    }\n                }\n            },\n            {\n                \"id\": \"662f6ceb2fd21e33f7390931\",\n                \"nombre\": \"estacion2\",\n                \"numPuestos\": 11,\n                \"direccionPostal\": \"calle estacion\",\n                \"coordenadas\": \"0,0,0,0\",\n                \"_links\": {\n                    \"bicicletasDisponibles:\": {\n                        \"href\": \"http://localhost:8085/estaciones/662f6ceb2fd21e33f7390931/bicicletasDisponibles?page=0&size=5\"\n                    }\n                }\n            },\n            {\n                \"id\": \"662f779fc7ef5945e07d9141\",\n                \"nombre\": \"estacion2\",\n                \"numPuestos\": 11,\n                \"direccionPostal\": \"calle estacion\",\n                \"coordenadas\": \"0,0,0,0\",\n                \"_links\": {\n                    \"bicicletasDisponibles:\": {\n                        \"href\": \"http://localhost:8085/estaciones/662f779fc7ef5945e07d9141/bicicletasDisponibles?page=0&size=5\"\n                    }\n                }\n            },\n            {\n                \"id\": \"662f81bed67b0f6fd85f0bac\",\n                \"nombre\": \"estacion2\",\n                \"numPuestos\": 10,\n                \"direccionPostal\": \"calle estacion\",\n                \"coordenadas\": \"0,0,0,0\",\n                \"_links\": {\n                    \"bicicletasDisponibles:\": {\n                        \"href\": \"http://localhost:8085/estaciones/662f81bed67b0f6fd85f0bac/bicicletasDisponibles?page=0&size=5\"\n                    }\n                }\n            }\n        ]\n    },\n    \"_links\": {\n        \"first\": {\n            \"href\": \"http://localhost:8085/estaciones?page=0&size=5\"\n        },\n        \"self\": {\n            \"href\": \"http://localhost:8085/estaciones?page=0&size=5\"\n        },\n        \"next\": {\n            \"href\": \"http://localhost:8085/estaciones?page=1&size=5\"\n        },\n        \"last\": {\n            \"href\": \"http://localhost:8085/estaciones?page=1&size=5\"\n        }\n    },\n    \"page\": {\n        \"size\": 5,\n        \"totalElements\": 9,\n        \"totalPages\": 2,\n        \"number\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "RecuperarBicicletas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/estaciones/662f6c7c8b431333486f662f/bicicletas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"estaciones",
+								"662f6c7c8b431333486f662f",
+								"bicicletas"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/estaciones/662f6c7c8b431333486f662f/bicicletas",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"estaciones",
+										"662f6c7c8b431333486f662f",
+										"bicicletas"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/hal+json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 09:51:20 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_embedded\": {\n        \"bicicletaDTOList\": [\n            {\n                \"id\": \"66511ecfc8b9637e5183a6b9\",\n                \"modelo\": \"model1999\",\n                \"disponible\": true,\n                \"idEstacion\": \"662f6c7c8b431333486f662f\",\n                \"_links\": {\n                    \"darBaja\": {\n                        \"href\": \"http://localhost:8085/estaciones/baja/66511ecfc8b9637e5183a6b9?motivo=enlace-dar-de-baja\",\n                        \"type\": \"PUT\"\n                    }\n                }\n            }\n        ]\n    },\n    \"_links\": {\n        \"self\": {\n            \"href\": \"http://localhost:8085/estaciones/662f6c7c8b431333486f662f/bicicletas?page=0&size=5\"\n        }\n    },\n    \"page\": {\n        \"size\": 5,\n        \"totalElements\": 1,\n        \"totalPages\": 1,\n        \"number\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "RecuperarBicicletasDisponibles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/estaciones/662f6c7c8b431333486f662f/bicicletasDisponibles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"estaciones",
+								"662f6c7c8b431333486f662f",
+								"bicicletasDisponibles"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8085/estaciones/662f6c7c8b431333486f662f/bicicletasDisponibles",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"estaciones",
+										"662f6c7c8b431333486f662f",
+										"bicicletasDisponibles"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 09:53:48 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": \"66511ecfc8b9637e5183a6b9\",\n            \"modelo\": \"model1999\",\n            \"disponible\": true,\n            \"idEstacion\": \"662f6c7c8b431333486f662f\"\n        }\n    ],\n    \"pageable\": {\n        \"sort\": {\n            \"empty\": true,\n            \"sorted\": false,\n            \"unsorted\": true\n        },\n        \"offset\": 0,\n        \"pageNumber\": 0,\n        \"pageSize\": 5,\n        \"paged\": true,\n        \"unpaged\": false\n    },\n    \"totalPages\": 1,\n    \"totalElements\": 1,\n    \"last\": true,\n    \"size\": 5,\n    \"number\": 0,\n    \"sort\": {\n        \"empty\": true,\n        \"sorted\": false,\n        \"unsorted\": true\n    },\n    \"numberOfElements\": 1,\n    \"first\": true,\n    \"empty\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "AltaBicicleta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "modelo",
+									"value": "Model 9999",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8085/estaciones/662f6c7c8b431333486f662f/bicicletas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"estaciones",
+								"662f6c7c8b431333486f662f",
+								"bicicletas"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "modelo",
+											"value": "Model 9999",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8085/estaciones/662f6c7c8b431333486f662f/bicicletas",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"estaciones",
+										"662f6c7c8b431333486f662f",
+										"bicicletas"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 09:58:24 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"mensaje\": \"Bicicleta con id: 66681fc04910ee134048a84a añadida a la estación: 662f6c7c8b431333486f662f\"\n}"
+						}
+					]
+				},
+				{
+					"name": "AltaEstacion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nombre",
+									"value": "Estacion Colon",
+									"type": "text"
+								},
+								{
+									"key": "numPuestos",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "direccion",
+									"value": "calle 123",
+									"type": "text"
+								},
+								{
+									"key": "coordenadas",
+									"value": "N 40 W 91",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8085/estaciones/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"estaciones",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "nombre",
+											"value": "Estacion Colon",
+											"type": "text"
+										},
+										{
+											"key": "numPuestos",
+											"value": "50",
+											"type": "text"
+										},
+										{
+											"key": "direccion",
+											"value": "calle 123",
+											"type": "text"
+										},
+										{
+											"key": "coordenadas",
+											"value": "N 40 W 91",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8085/estaciones/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"estaciones",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Location",
+									"value": "http://localhost:8085/estaciones/666820374910ee134048a84b"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain;charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "49"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 10:00:23 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "Estación creada con id: 666820374910ee134048a84b"
+						}
+					]
+				},
+				{
+					"name": "BajaBicicleta",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "motivo",
+									"value": "Rueda pinchada",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8085/estaciones/baja/66511ecfc8b9637e5183a6b9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"estaciones",
+								"baja",
+								"66511ecfc8b9637e5183a6b9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "EstacionarBicicleta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nombre",
+									"value": "Estacion Colon",
+									"type": "text"
+								},
+								{
+									"key": "numPuestos",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "direccion",
+									"value": "calle 123",
+									"type": "text"
+								},
+								{
+									"key": "coordenadas",
+									"value": "N 40 W 91",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8085/estaciones/662f6c8b7a7ea20f9700b871/estacionar/66681fc04910ee134048a84a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"estaciones",
+								"662f6c8b7a7ea20f9700b871",
+								"estacionar",
+								"66681fc04910ee134048a84a"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "nombre",
+											"value": "Estacion Colon",
+											"type": "text"
+										},
+										{
+											"key": "numPuestos",
+											"value": "50",
+											"type": "text"
+										},
+										{
+											"key": "direccion",
+											"value": "calle 123",
+											"type": "text"
+										},
+										{
+											"key": "coordenadas",
+											"value": "N 40 W 91",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:8085/estaciones/662f6c8b7a7ea20f9700b871/estacionar/66681fc04910ee134048a84a",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8085",
+									"path": [
+										"estaciones",
+										"662f6c8b7a7ea20f9700b871",
+										"estacionar",
+										"66681fc04910ee134048a84a"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 10:19:17 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"662f6c8b7a7ea20f9700b871\",\n    \"nombre\": \"estacion2\",\n    \"numPuestos\": 8,\n    \"direccionPostal\": \"calle estacion\",\n    \"coordenadas\": \"0,0,0,0\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "UsuariosApi",
+			"item": [
+				{
+					"name": "ListadoUsuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/usuarios",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"usuarios"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 10:32:46 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"6667125070cb48e39285ebc1\",\n        \"nombre\": \"\",\n        \"nick\": \"pablo.lopez\",\n        \"nickGitHub\": \"\",\n        \"role\": \"Usuario\",\n        \"activado\": false\n    },\n    {\n        \"id\": \"6667144ca3a4038fae0a6881\",\n        \"nombre\": \"Pablo G.\",\n        \"nick\": \"\",\n        \"nickGitHub\": \"pablo24r\",\n        \"role\": \"Usuario\",\n        \"activado\": false\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "SolicitudCodigo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/codigo/66682822adcbb0c70f8e8abe",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								"codigo",
+								"66682822adcbb0c70f8e8abe"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:5000/api/usuarios/codigo/66682822adcbb0c70f8e8abe",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"usuarios",
+										"codigo",
+										"66682822adcbb0c70f8e8abe"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 10:34:25 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"6668283215221bf5528f07a5\",\n    \"userId\": \"66682822adcbb0c70f8e8abe\",\n    \"code\": \"VBJ7YR\",\n    \"expiration\": \"2024-06-12T10:34:26.16713Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "AltaUsuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "winner",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/activar/9MP8ZA?nick=Mike23&nombre=Michael Jordan&password=winner",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								"activar",
+								"9MP8ZA"
+							],
+							"query": [
+								{
+									"key": "nick",
+									"value": "Mike23"
+								},
+								{
+									"key": "nombre",
+									"value": "Michael Jordan"
+								},
+								{
+									"key": "password",
+									"value": "winner"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "password",
+											"value": "winner",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/usuarios/activar/9MP8ZA?nick=Mike23&nombre=Michael Jordan&password=winner",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"usuarios",
+										"activar",
+										"9MP8ZA"
+									],
+									"query": [
+										{
+											"key": "nick",
+											"value": "Mike23"
+										},
+										{
+											"key": "nombre",
+											"value": "Michael Jordan"
+										},
+										{
+											"key": "password",
+											"value": "winner"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 10:52:51 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"66682aad1435ae0933acd1b9\",\n    \"nombre\": \"\",\n    \"nick\": \"Mike23\",\n    \"passwordHash\": \"QiGg/D37/YMNw6E/bHLSM3gReb6iffUy/5A/Or26VYY=\",\n    \"oAuth2Id\": \"\",\n    \"role\": \"Usuario\",\n    \"activado\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "VerificarCredenciales",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "password",
+									"value": "winner",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/login?nick=Mike23",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								"login"
+							],
+							"query": [
+								{
+									"key": "nick",
+									"value": "Mike23"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "password",
+											"value": "winner",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/usuarios/login?nick=Mike23",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"usuarios",
+										"login"
+									],
+									"query": [
+										{
+											"key": "nick",
+											"value": "Mike23"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 10:56:57 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Id\": \"66682aad1435ae0933acd1b9\",\n    \"Nombre\": \"\",\n    \"Nick\": \"Mike23\",\n    \"PasswordHash\": \"QiGg/D37/YMNw6E/bHLSM3gReb6iffUy/5A/Or26VYY=\",\n    \"Role\": \"Usuario\",\n    \"Activado\": \"True\"\n}"
+						}
+					]
+				},
+				{
+					"name": "VerificarOauth",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/oauth2?nick=pablo24r",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								"oauth2"
+							],
+							"query": [
+								{
+									"key": "nick",
+									"value": "pablo24r"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/usuarios/oauth2?nick=pablo24r",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"usuarios",
+										"oauth2"
+									],
+									"query": [
+										{
+											"key": "nick",
+											"value": "pablo24r"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 10:59:16 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Kestrel"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Id\": \"6667144ca3a4038fae0a6881\",\n    \"Nombre\": \"Pablo G.\",\n    \"GitHub-Nick\": \"pablo24r\",\n    \"Role\": \"Usuario\",\n    \"Activado\": \"True\"\n}"
+						}
+					]
+				},
+				{
+					"name": "BajaUsuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/usuarios/baja/66682aad1435ae0933acd1b9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"usuarios",
+								"baja",
+								"66682aad1435ae0933acd1b9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pasarela",
+			"item": [
+				{
+					"name": "Prueba",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8090/auth/prueba/123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"auth",
+								"prueba",
+								"123"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8090/auth/prueba/123",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"auth",
+										"prueba",
+										"123"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain;charset=UTF-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "46"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 17:14:35 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\"message\": \"Prueba exitosa\", \"userId\": \"123\"}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8090/auth/login?nick=pablo.lopez&password=contraseña123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"auth",
+								"login"
+							],
+							"query": [
+								{
+									"key": "nick",
+									"value": "pablo.lopez"
+								},
+								{
+									"key": "password",
+									"value": "contraseña123"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:8090/auth/login?nick=Mike23&password=winner",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"auth",
+										"login"
+									],
+									"query": [
+										{
+											"key": "nick",
+											"value": "Mike23"
+										},
+										{
+											"key": "password",
+											"value": "winner"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 17:20:43 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"66682aad1435ae0933acd1b9\",\n    \"nombre\": \"Michael Jordan\",\n    \"rol\": \"Usuario\",\n    \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJNaWtlMjMiLCJpZCI6IjY2NjgyYWFkMTQzNWFlMDkzM2FjZDFiOSIsIm5vbWJyZSI6Ik1pY2hhZWwgSm9yZGFuIiwicm9sIjoiVXN1YXJpbyIsImlhdCI6MTcxODEyNjQ0MywiZXhwIjoxNzE4MTMwMDQzfQ.Z-2vZIWx-l8a1YJiVYVWGnQH7FlsOZw6WW3uJ-RQNPc\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Oauth2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8090/auth/oauth2?nick=pablo24r",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"auth",
+								"oauth2"
+							],
+							"query": [
+								{
+									"key": "nick",
+									"value": "pablo24r"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:8090/auth/oauth2?nick=pablo24re",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"auth",
+										"oauth2"
+									],
+									"query": [
+										{
+											"key": "nick",
+											"value": "pablo24re"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 11 Jun 2024 17:46:13 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"6667144ca3a4038fae0a6881\",\n    \"nombre\": \"Pablo G.\",\n    \"rol\": \"Usuario\",\n    \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsbzI0ciIsImlkIjoiNjY2NzE0NGNhM2E0MDM4ZmFlMGE2ODgxIiwibm9tYnJlIjoiUGFibG8gRy4iLCJyb2wiOiJVc3VhcmlvIiwiaWF0IjoxNzE4MTI3OTczLCJleHAiOjE3MTgxMzE1NzN9.tv525wtdMg6hjFsRT9FFixl_IrE1axZMXyJ6bBkIQoA\"\n}"
+						}
+					]
+				},
+				{
+					"name": "RecuperarEstaciones",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5sb3BleiIsImlkIjoiNjY2NzEyNTA3MGNiNDhlMzkyODVlYmMxIiwibm9tYnJlIjoiIiwicm9sIjoiVXN1YXJpbyIsImlhdCI6MTcxODE4OTU2OSwiZXhwIjoxNzE4MTkzMTY5fQ.K8AkgZ_AH-zTgo_kuxJsnS8iptYewqCQe0yjdrbuv3g"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8090/estaciones",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"estaciones"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5sb3BleiIsImlkIjoiNjY2NzEyNTA3MGNiNDhlMzkyODVlYmMxIiwibm9tYnJlIjoiIiwicm9sIjoiZ2VzdG9yIiwiaWF0IjoxNzE4MjA2NDg0LCJleHAiOjE3MTgyMTAwODR9.UUhSjQ4agqT36B7zI-NLGi0k9m8OpPYJGuIw8JpF5y8"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:8090/estaciones",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"estaciones"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 12 Jun 2024 15:35:05 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/hal+json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"_embedded\": {\n        \"estacionDTOList\": [\n            {\n                \"id\": \"662f6c7c8b431333486f662f\",\n                \"nombre\": \"estacion2\",\n                \"numPuestos\": 12,\n                \"direccionPostal\": \"calle estacion\",\n                \"coordenadas\": \"0,0,0,0\",\n                \"_links\": {\n                    \"bicicletasDisponibles:\": {\n                        \"href\": \"http://localhost:8085/estaciones/662f6c7c8b431333486f662f/bicicletasDisponibles?page=0&size=5\"\n                    }\n                }\n            },\n            {\n                \"id\": \"662f6c8b7a7ea20f9700b871\",\n                \"nombre\": \"estacion2\",\n                \"numPuestos\": 8,\n                \"direccionPostal\": \"calle estacion\",\n                \"coordenadas\": \"0,0,0,0\",\n                \"_links\": {\n                    \"bicicletasDisponibles:\": {\n                        \"href\": \"http://localhost:8085/estaciones/662f6c8b7a7ea20f9700b871/bicicletasDisponibles?page=0&size=5\"\n                    }\n                }\n            },\n            {\n                \"id\": \"662f6ceb2fd21e33f7390931\",\n                \"nombre\": \"estacion2\",\n                \"numPuestos\": 11,\n                \"direccionPostal\": \"calle estacion\",\n                \"coordenadas\": \"0,0,0,0\",\n                \"_links\": {\n                    \"bicicletasDisponibles:\": {\n                        \"href\": \"http://localhost:8085/estaciones/662f6ceb2fd21e33f7390931/bicicletasDisponibles?page=0&size=5\"\n                    }\n                }\n            },\n            {\n                \"id\": \"662f779fc7ef5945e07d9141\",\n                \"nombre\": \"estacion2\",\n                \"numPuestos\": 11,\n                \"direccionPostal\": \"calle estacion\",\n                \"coordenadas\": \"0,0,0,0\",\n                \"_links\": {\n                    \"bicicletasDisponibles:\": {\n                        \"href\": \"http://localhost:8085/estaciones/662f779fc7ef5945e07d9141/bicicletasDisponibles?page=0&size=5\"\n                    }\n                }\n            },\n            {\n                \"id\": \"662f81bed67b0f6fd85f0bac\",\n                \"nombre\": \"estacion2\",\n                \"numPuestos\": 10,\n                \"direccionPostal\": \"calle estacion\",\n                \"coordenadas\": \"0,0,0,0\",\n                \"_links\": {\n                    \"bicicletasDisponibles:\": {\n                        \"href\": \"http://localhost:8085/estaciones/662f81bed67b0f6fd85f0bac/bicicletasDisponibles?page=0&size=5\"\n                    }\n                }\n            }\n        ]\n    },\n    \"_links\": {\n        \"first\": {\n            \"href\": \"http://localhost:8085/estaciones/?page=0&size=5\"\n        },\n        \"self\": {\n            \"href\": \"http://localhost:8085/estaciones/?page=0&size=5\"\n        },\n        \"next\": {\n            \"href\": \"http://localhost:8085/estaciones/?page=1&size=5\"\n        },\n        \"last\": {\n            \"href\": \"http://localhost:8085/estaciones/?page=1&size=5\"\n        }\n    },\n    \"page\": {\n        \"size\": 5,\n        \"totalElements\": 10,\n        \"totalPages\": 2,\n        \"number\": 0\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "RecuperarUsuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5sb3BleiIsImlkIjoiNjY2NzEyNTA3MGNiNDhlMzkyODVlYmMxIiwibm9tYnJlIjoiIiwicm9sIjoiZ2VzdG9yIiwiaWF0IjoxNzE4MTkzMTQyLCJleHAiOjE3MTgxOTY3NDJ9.lsby8QhX-TFa91RVGZfXQCrfyUPxwQBhqGdMAHQ-eGg"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8090/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYWJsby5sb3BleiIsImlkIjoiNjY2NzEyNTA3MGNiNDhlMzkyODVlYmMxIiwibm9tYnJlIjoiIiwicm9sIjoiVXN1YXJpbyIsImlhdCI6MTcxODE4OTU2OSwiZXhwIjoxNzE4MTkzMTY5fQ.K8AkgZ_AH-zTgo_kuxJsnS8iptYewqCQe0yjdrbuv3g"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:8090/usuarios",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"usuarios"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 12 Jun 2024 10:53:34 GMT"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json;charset=utf-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"6667125070cb48e39285ebc1\",\n        \"nombre\": \"\",\n        \"nick\": \"pablo.lopez\",\n        \"nickGitHub\": \"\",\n        \"role\": \"Usuario\",\n        \"activado\": false\n    },\n    {\n        \"id\": \"6667144ca3a4038fae0a6881\",\n        \"nombre\": \"Pablo G.\",\n        \"nick\": \"\",\n        \"nickGitHub\": \"pablo24r\",\n        \"role\": \"Usuario\",\n        \"activado\": false\n    },\n    {\n        \"id\": \"66682aad1435ae0933acd1b9\",\n        \"nombre\": \"Michael Jordan\",\n        \"nick\": \"Mike23\",\n        \"nickGitHub\": \"\",\n        \"role\": \"Usuario\",\n        \"activado\": false\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "RecuperarAlquileres",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQYWJsbyIsInJvbGVzIjoidXN1YXJpbyIsImV4cCI6MTcxODIwODMyNn0.JqNREpa8LyNZm9Mb04TsyGI-XLTuwGUd_gb1X5CD0YE"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:8090/alquileres/66537e4e92ea907f5309d3a9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"alquileres",
+								"66537e4e92ea907f5309d3a9"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "respuesta",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQYWJsbyIsInJvbGVzIjoidXN1YXJpbyIsImV4cCI6MTcxODIwODMyNn0.JqNREpa8LyNZm9Mb04TsyGI-XLTuwGUd_gb1X5CD0YE"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": []
+								},
+								"url": {
+									"raw": "http://localhost:8090/alquileres/66537e4e92ea907f5309d3a9",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8090",
+									"path": [
+										"alquileres",
+										"66537e4e92ea907f5309d3a9"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 12 Jun 2024 15:18:39 GMT"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"66537e4e92ea907f5309d3a9\",\n    \"reservas\": [],\n    \"alquileres\": [\n        {\n            \"idBicicleta\": \"bici1\",\n            \"inicio\": {\n                \"date\": {\n                    \"year\": 2024,\n                    \"month\": 5,\n                    \"day\": 26\n                },\n                \"time\": {\n                    \"hour\": 20,\n                    \"minute\": 24,\n                    \"second\": 15,\n                    \"nano\": 418000000\n                }\n            }\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
