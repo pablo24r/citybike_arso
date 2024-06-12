@@ -30,7 +30,7 @@ namespace usuarios.Controllers
         }
 
         [HttpPost("activar/{codigo}")]
-        public ActionResult<ActivationCode> AltaUsuario(string codigo, [FromQuery] string nombre, [FromQuery] string nick, [FromQuery] string? password = null)
+        public ActionResult<ActivationCode> AltaUsuario(string codigo, [FromQuery] string nombre, [FromQuery] string nick, [FromForm] string? password = null)
         {
             Usuario? usuario;
             if (!string.IsNullOrEmpty(password))
@@ -60,8 +60,11 @@ namespace usuarios.Controllers
         }
      	
      	[HttpPost("login")]
-        public ActionResult<string> VerificarCredenciales([FromForm] string nick, [FromForm] string password)
+        public ActionResult<string> VerificarCredenciales([FromQuery] string nick, [FromForm] string password)
         {
+			Console.WriteLine("SI->"+ nick);
+			Console.WriteLine("SI->"+ password);
+
             var claims = _servicio.VerificarCredenciales(nick, password);
             if (claims.Count == 0)
             {
@@ -71,7 +74,7 @@ namespace usuarios.Controllers
         }
 
         [HttpPost("oauth2")]
-        public ActionResult<string> VerificarOauth([FromForm] string nick)
+        public ActionResult<string> VerificarOauth([FromQuery] string nick)
         {
             var claims = _servicio.VerificarOAuth2(nick);
             if (claims.Count == 0)

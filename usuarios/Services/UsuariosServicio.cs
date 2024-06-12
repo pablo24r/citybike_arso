@@ -73,7 +73,7 @@ namespace usuarios.Servicio
 
         private static string HashPassword(string password)
         {
-            using var sha256 = SHA256.Create();
+            var sha256 = SHA256.Create();
             var bytes = Encoding.UTF8.GetBytes(password);
             var hash = sha256.ComputeHash(bytes);
             return Convert.ToBase64String(hash);
@@ -140,12 +140,12 @@ namespace usuarios.Servicio
                 {
                     return new Dictionary<string, string>
                     {
-                        { "Id", usuario.Id },
-                        { "Nombre", usuario.Nombre },
-                        { "Nick", usuario.Nick },
-                        { "PasswordHash", usuario.PasswordHash },
-                        { "Role", usuario.Role },
-                        { "Activado", usuario.Activado.ToString() }
+                        { "id", usuario.Id },
+                        { "nombre", usuario.Nombre },
+                        { "nick", usuario.Nick },
+                        { "passwordHash", usuario.PasswordHash },
+                        { "rol", usuario.Role },
+                        { "activado", usuario.Activado.ToString() }
                     };
                 }
             }
@@ -160,11 +160,11 @@ namespace usuarios.Servicio
                 {
                     return new Dictionary<string, string>
                     {
-                        { "Id", usuario.Id },
-                        { "Nombre", usuario.Nombre },
-                        { "GitHub-Nick", usuario.OAuth2Id },
-                        { "Role", usuario.Role },
-                        { "Activado", usuario.Activado.ToString() }
+                        { "id", usuario.Id },
+                        { "nombre", usuario.Nombre },
+                        { "gitHub-Nick", usuario.OAuth2Id },
+                        { "rol", usuario.Role },
+                        { "activado", usuario.Activado.ToString() }
                     };
                 }
             }

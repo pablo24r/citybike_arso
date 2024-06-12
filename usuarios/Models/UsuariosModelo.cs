@@ -23,8 +23,8 @@ namespace usuarios.Modelo
         [BsonElement("OAuth2Id")]
         public string OAuth2Id { get; set; } = string.Empty;
 
-        [BsonElement("Role")]
-        public string Role { get; set; } = "Usuario";
+        [BsonElement("Rol")]
+        public string Role { get; set; } = "usuario";
         
         [BsonElement("Activado")]
         public bool Activado { get; set; } = false;
