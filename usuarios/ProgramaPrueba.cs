@@ -5,7 +5,7 @@ using usuarios.Servicio;
 using System.Linq;
 using usuarios.Repositorio;
 using System.Text.Json;
-/*
+/* 
 namespace Pruebas
 {
     class Program
@@ -22,16 +22,15 @@ namespace Pruebas
             // Crear un usuario de prueba
             var usuario = new Usuario
             {
-                Nombre = "Pablo prueba2",
-                Email = "pablo@example.com",
+                Nombre = "Pablo López Guevara",
             };
 
-            //string id = usuarios.Add(usuario);
+            string id = usuarios.Add(usuario);
 
             // Solicitar un código de activación para el usuario
             var activationCode = servicioUsuarios.SolicitudCodigoActivacion("6662e58c49097e0cb29e2461");
 
-            servicioUsuarios.AltaUsuario(activationCode.Code, 1, "pablo24_r", "contraseña123");
+            //servicioUsuarios.AltaUsuario(activationCode.Code, 1, "pablo24_r", "contraseña123");
 
             foreach (var user in servicioUsuarios.GetUsuarios()){
                 Console.WriteLine(user.Id);
@@ -50,5 +49,4 @@ namespace Pruebas
             //Console.WriteLine($"User's Activation Code Expiration: {usuarioConCodigo.Codigo.Expiration}");
         }
     }
-}
-*/
+}*/

@@ -156,9 +156,17 @@ namespace usuarios.Servicio
         {
             var usuario = RepoUsuarios.GetAll().Find(user => user.OAuth2Id == nick);
             if( usuario != null)
+            {}
+            else
             {
-                {
-                    return new Dictionary<string, string>
+				usuario = new Usuario
+				{
+                   	OAuth2Id = nick,
+                	Role = "usuario",     
+				};
+				RepoUsuarios.Add(usuario);
+			}
+			return new Dictionary<string, string>
                     {
                         { "id", usuario.Id },
                         { "nombre", usuario.Nombre },
@@ -166,9 +174,7 @@ namespace usuarios.Servicio
                         { "rol", usuario.Role },
                         { "activado", usuario.Activado.ToString() }
                     };
-                }
-            }
-            return new Dictionary<string, string>{};
+ 
         }
 
         public List<UsuariosResumen> GetListadoUsuarios()

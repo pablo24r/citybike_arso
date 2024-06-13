@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JlDzEupICG1/ZGrpJliFfJpzj20zOXA+mWFkmMM5OL8PPhYa7cmGr405gz+rVazFq00NTdn17eU7ZPjOOAx/aQ==",
+  "dgSpecHash": "INwwC7jTFVMRhun+ZSEVU4kKajS9zv+XeVbt9yv+4ClKBAxIEG9hBERiTSRikIrPIzWOUabP24vcZgdl+K2b+w==",
   "success": true,
-  "projectFilePath": "/home/pablo/Escritorio/ARSO/usuarios/usuarios.csproj",
+  "projectFilePath": "/home/pablo/Escritorio/citybike_LopezGuevara/usuarios/usuarios.csproj",
   "expectedPackageFiles": [
     "/home/pablo/.nuget/packages/dnsclient/1.6.0/dnsclient.1.6.0.nupkg.sha512",
     "/home/pablo/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

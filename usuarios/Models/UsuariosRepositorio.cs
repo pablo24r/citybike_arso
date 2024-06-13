@@ -12,7 +12,8 @@ namespace usuarios.Repositorio
     public class RepositorioUsuariosMongoDB : Repositorio<Usuario, string>
     {
         private readonly IMongoCollection<Usuario> usuarios;
-        string uri = "mongodb+srv://pabloraullopezmartinez:ARSO2024@clusterarso.w0erjqo.mongodb.net/?retryWrites=true&w=majority&appName=ClusterARSO";
+        //string uri = "mongodb+srv://pabloraullopezmartinez:ARSO2024@clusterarso.w0erjqo.mongodb.net/?retryWrites=true&w=majority&appName=ClusterARSO";
+        string uri = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING_USUARIOS");
         public RepositorioUsuariosMongoDB()
         {
             var client = new MongoClient(uri);
@@ -62,7 +63,8 @@ namespace usuarios.Repositorio
     public class RepositorioCodigosMongoDB : Repositorio<ActivationCode, string>
     {
         private readonly IMongoCollection<ActivationCode> codigos;
-        string uri = "mongodb+srv://pabloraullopezmartinez:ARSO2024@clusterarso.w0erjqo.mongodb.net/?retryWrites=true&w=majority&appName=ClusterARSO";
+        //string uri = "mongodb+srv://pabloraullopezmartinez:ARSO2024@clusterarso.w0erjqo.mongodb.net/?retryWrites=true&w=majority&appName=ClusterARSO";
+        string uri = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING_CODIGOS");
         public RepositorioCodigosMongoDB()
         {
             var client = new MongoClient(uri);
