@@ -26,14 +26,13 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 @Component
 public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
 	
-	private Retrofit retrofit = new Retrofit.Builder().baseUrl("http://localhost:5000/api/usuarios/")
+	private Retrofit retrofit = new Retrofit.Builder().baseUrl("http://usuarios:5000/api/usuarios/")
 			.addConverterFactory(ScalarsConverterFactory.create())
 			.addConverterFactory(GsonConverterFactory.create()).build();
 	
 	private final ClienteUsuariosApi usuariosService = retrofit.create(ClienteUsuariosApi.class);
 	
 	
-	@SuppressWarnings("unused")
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,Authentication authentication) {
 		DefaultOAuth2User usuario = (DefaultOAuth2User) authentication.getPrincipal();
@@ -43,7 +42,6 @@ public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
 			
 			if (claims != null) {
 				System.out.println(claims.toString());
-				Date caducidad = Date.from(Instant.now().plusSeconds(3600));
 				String token = Jwts.builder().setSubject(idGitHub)
 						.claim("id", claims.get("id"))
 						.claim("nombre", claims.get("nombre"))

@@ -26,7 +26,7 @@ public class PasarelaControladorRest {
 
 
 
-		private Retrofit retrofit = new Retrofit.Builder().baseUrl("http://localhost:5000/api/usuarios/")
+		private Retrofit retrofit = new Retrofit.Builder().baseUrl("http://usuarios:5000/api/usuarios/")
 				.addConverterFactory(ScalarsConverterFactory.create())
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		ClienteUsuariosApi usuariosService = retrofit.create(ClienteUsuariosApi.class);
